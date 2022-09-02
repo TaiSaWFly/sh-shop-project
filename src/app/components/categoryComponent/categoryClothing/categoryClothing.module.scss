@@ -1,0 +1,50 @@
+@import "../../../../styles/colors.scss";
+
+.category_clothing {
+  font-family: "Lato Bold";
+  text-align: center;
+}
+
+.category_clothing__wrapper {
+  margin-bottom: 150px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.category_clothing__info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+
+.category_clothing__info_title {
+  font-weight: 700;
+  font-size: 3.6rem;
+}
+
+.category_clothing__info_show_more {
+  font-family: "Georgia Italic";
+  font-size: 1.8rem;
+  line-height: 0.8;
+
+  a {
+    display: inline-block;
+    text-decoration: underline;
+    position: relative;
+
+    &::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 5px 0 5px 6px;
+      border-color: transparent transparent transparent $secondary;
+
+      position: absolute;
+      right: -15px;
+      top: 3.5px;
+    }
+  }
+}

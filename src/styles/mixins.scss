@@ -1,0 +1,29 @@
+@import "./colors.scss";
+
+@mixin conteiner {
+  width: 100%;
+  max-width: 1770px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@mixin add-arrow {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-bottom-color: $secondary;
+  border-right-color: $secondary;
+  border-radius: 1px;
+
+  position: absolute;
+}
+
+@mixin border-top-decor-componnent {
+  border-top: 1px solid $quaternary;
+}
+
+@mixin border-bottom-decor-componnent {
+  border-bottom: 1px solid $quaternary;
+}

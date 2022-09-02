@@ -1,0 +1,37 @@
+@import "../../../../styles/colors.scss";
+
+.trend_list_actions__wrapper {
+  display: flex;
+}
+
+.trend_list_actions__wrap {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  padding: 5px;
+
+  background: transparent;
+  border: 1px solid $primary;
+  border-radius: 50%;
+  position: relative;
+
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background: $hoverBlue;
+    border-color: transparent;
+
+    .trend_list_actions__icon * {
+      fill: $hoverWhite;
+    }
+  }
+}
+
+.trend_list_actions__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  transition: fill 0.2s ease-in-out;
+}
