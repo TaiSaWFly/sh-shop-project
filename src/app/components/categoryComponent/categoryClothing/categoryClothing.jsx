@@ -2,7 +2,7 @@ import React from "react";
 import ClothingItems from "../clothingItems/clothingItems";
 import style from "./categoryClothing.module.scss";
 
-const CategoryClothing = ({clothing, categoryUrl}) => {
+const CategoryClothing = ({ clothing }) => {
   return (
     <div className={style.category_clothing}>
       {clothing.map((item, index) => (
@@ -16,7 +16,7 @@ const CategoryClothing = ({clothing, categoryUrl}) => {
             </div>
           </div>
 
-          <ClothingItems clothes={item.clothing} categoryUrl={categoryUrl} />
+          <ClothingItems clothes={item.clothing} />
         </div>
       ))}
     </div>

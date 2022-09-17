@@ -1,21 +1,16 @@
 @import "../../../../styles/colors.scss";
 @import "../../../../styles/mixins.scss";
 
-.nav_bar__conteiner {
-  @include conteiner;
+.nav_bar {
   font-size: 1.5rem;
   font-weight: 400;
   color: $primary;
 }
 
 .nav_bar__wrap {
-  margin-top: 30px;
-  padding-bottom: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  @include border-bottom-decor-componnent;
 }
 
 .nav_logo {

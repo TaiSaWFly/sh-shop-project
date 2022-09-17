@@ -1,19 +1,9 @@
 @import "../../../styles/colors.scss";
 @import "../../../styles/mixins.scss";
 
-.product_card_container {
-  @include conteiner;
-}
-
 .product_card {
   font-family: "Lato Bold";
   font-size: 1.4rem;
-
-  padding: 70px 0;
-  @include border-bottom-decor-componnent;
-}
-
-.product_card__wrap {
   display: flex;
   margin: 0 -15px;
 }

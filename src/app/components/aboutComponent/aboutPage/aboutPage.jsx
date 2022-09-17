@@ -1,20 +1,23 @@
 import React from "react";
 import style from "./aboutPage.module.scss";
 import { about } from "../../../constants/aboute";
+import TitleComponent from "../../common/titleComponent/titleComponent";
 
 const AboutPage = () => {
   return (
     <div className={style.about_page_conteiner}>
       <div className={style.about_page}>
-        <div className={style.about_page_title}>about</div>
-        <div className={style.about_page_subtitle}>
-          Lorem ipsum dolor sit amet enim. Etiam ullamcorp uspendisse a
-          pellentesque
-        </div>
+        <TitleComponent>
+          <div>about</div>
+          <span>
+            Lorem ipsum dolor sit amet enim. Etiam ullamcorp uspendisse a
+            pellentesque
+          </span>
+        </TitleComponent>
 
         <div className={style.about_page__wrapper}>
-          {about.map((item) => (
-            <div className={style.about_page__item}>
+          {about.map((item, index) => (
+            <div key={index} className={style.about_page__item}>
               <div className={style.about_page__item_img}>
                 <img alt="pic" src={require(`/src/${item.imgUrl}`)} />
               </div>

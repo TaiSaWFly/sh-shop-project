@@ -1,17 +1,9 @@
 @import "../../../../styles/mixins.scss";
 @import "../../../../styles/colors.scss";
 
-.footer__wrap {
-  padding: 45px 0;
-  font-size: 1.2rem;
-}
-
-.footer__conteiner {
-  @include conteiner;
-}
-
 .footer__wrapper {
   display: flex;
+  font-size: 1.2rem;
 }
 
 .footer__list {

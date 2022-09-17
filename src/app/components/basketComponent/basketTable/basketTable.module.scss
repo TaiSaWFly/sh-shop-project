@@ -1,0 +1,125 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/mixins.scss";
+
+.basket_table {
+  font-size: 1.2rem;
+
+  & table {
+    display: block;
+    width: 100%;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-collapse: collapse;
+
+    & th {
+      padding-bottom: 10px;
+    }
+
+    & td {
+      padding: 20px 0;
+    }
+
+    & thead {
+      color: $secondary;
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: 0.75px;
+
+      & tr {
+        @include border-bottom-decor-componnent;
+      }
+    }
+
+    & tbody {
+      & tr {
+        @include border-bottom-decor-componnent;
+      }
+
+      tr:nth-child(even) {
+        background-color: #fdfdfd;
+      }
+
+      & td {
+        font-size: 1.3rem;
+        width: 100%;
+        padding-right: 70px;
+        white-space: nowrap;
+
+        &:first-of-type {
+          width: 100px;
+          height: 100px;
+          padding: 20px 25px 20px 5px;
+        }
+
+        &:nth-child(6) {
+          padding-right: 40px;
+        }
+
+        &:last-of-type {
+          padding-right: 10px;
+        }
+      }
+    }
+
+    & tfoot {
+      font-family: "Lato Bold";
+      font-size: 1.5rem;
+      background-color: #f9f9f9;
+      margin: 50px 0;
+
+      & span {
+        color: $orange;
+      }
+    }
+  }
+}
+
+.table__img {
+  width: 100px;
+  height: 100px;
+
+  border: 1px solid $boxShadow;
+  background: #8a8686;
+  overflow: hidden;
+}
+
+.basket_table__description {
+  font-family: "Lato Light Italic";
+  color: $primary;
+  font-size: 1.5rem;
+}
+
+.basket_table__description_title {
+  font-family: "Lato Bold";
+  text-transform: uppercase;
+}
+
+.basket_table__description_article {
+  font-size: 1rem;
+  color: $secondary;
+  font-weight: normal;
+
+  & span {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+
+.basket_table__color {
+  text-transform: capitalize;
+  letter-spacing: 0.75px;
+}
+
+.basket_table__QTY {
+  display: flex;
+  align-items: center;
+
+  & span {
+    margin: 2.5px 2.5px 0 0;
+  }
+}
+
+.basket_table__action_icon * {
+  fill: $tertiary;
+}

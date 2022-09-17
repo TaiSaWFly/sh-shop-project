@@ -7,6 +7,13 @@
   padding: 0 15px;
 }
 
+@mixin basket_conteiner {
+  width: 100%;
+  max-width: 1420px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
 @mixin add-arrow {
   content: "";
   width: 8px;
@@ -16,6 +23,15 @@
   border-bottom-color: $secondary;
   border-right-color: $secondary;
   border-radius: 1px;
+
+  position: absolute;
+}
+
+@mixin add-arrow-triangle {
+  content: "";
+  border-style: solid;
+  border-width: 5px 0 5px 6px;
+  border-color: transparent transparent transparent $secondary;
 
   position: absolute;
 }

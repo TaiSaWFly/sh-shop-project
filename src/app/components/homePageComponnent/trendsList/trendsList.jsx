@@ -10,14 +10,14 @@ const TrendsList = ({ clothes }) => {
   return (
     <div className={style.trends_list}>
       <div className={style.trends_list__wrapper}>
-        <Link
-          to="/category/categoryDebug/productIDDebug"
-          className={style.trends_list__item}>
-          <div className={style.trends_list__img}>
+        <div as={Link} className={style.trends_list__item}>
+          <Link to="/product/productIDDebug" className={style.trends_list__img}>
             <img alt="pic" src={require(`/src/${imgUrl}`)} />
             <div className={style.trends_list__img_other}>
-              {otherImg.map((img) => (
-                <div className={style.product_card__item__wrapper_img_other}>
+              {otherImg.map((img, index) => (
+                <div
+                  key={index}
+                  className={style.product_card__item__wrapper_img_other}>
                   <img alt="pic" src={require(`/src/${img.imgUrl}`)} />
                 </div>
               ))}
@@ -35,7 +35,7 @@ const TrendsList = ({ clothes }) => {
                 &pound;{price}
               </span>
             )}
-          </div>
+          </Link>
 
           <div className={style.trends_list__description}>
             <div className={style.trends_list__description_title}>
@@ -60,7 +60,7 @@ const TrendsList = ({ clothes }) => {
               <TrendListActions />
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import NavList from "../navList/navList";
 
 const NavBar = () => {
   return (
-    <nav className={style.nav_bar__conteiner}>
+    <nav className={style.nav_bar}>
       <div className={style.nav_bar__wrap}>
         <Link className={style.nav_logo} to="/">
           SH

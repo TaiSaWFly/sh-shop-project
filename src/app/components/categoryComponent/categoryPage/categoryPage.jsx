@@ -1,24 +1,20 @@
 import React from "react";
 import { categoryFor } from "../../../constants/category";
-import CategoryClothing from "../categoryClothing/categoryClothing";
-import style from "./categoryPage.module.scss";
+import ComponentContainer from "../../common/componentContainer/componentContainer";
+import CategoryHeader from "../categoryHeader/categoryHeader";
 
-const CategoryPage = ({ categoryUrl }) => {
+const CategoryPage = ({ categoryUrl, productAll }) => {
   const category = categoryFor.filter((item) => item.url === categoryUrl);
 
   return (
-    <div className={style.category_page_conteiner}>
-      <div className={style.category_page}>
-        <h2>CategoryPage</h2>
-        {category.map((item, index) => (
-          <CategoryClothing
-            key={index}
-            clothing={item.typesOfClothing}
-            categoryUrl={categoryUrl}
-          />
-        ))}
-      </div>
-    </div>
+    <ComponentContainer>
+      <h2>CategoryPage</h2>
+      <CategoryHeader
+        category={category}
+        categoryUrl={categoryUrl}
+        productAll={productAll}
+      />
+    </ComponentContainer>
   );
 };
 

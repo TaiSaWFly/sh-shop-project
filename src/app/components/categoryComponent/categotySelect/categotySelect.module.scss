@@ -1,0 +1,23 @@
+@import "../../../../styles/colors.scss";
+@import "../../../../styles/mixins.scss";
+
+.select_wrapper {
+  display: flex;
+}
+
+.select {
+  margin-right: 10px;
+  position: relative;
+
+  &::after {
+    @include add-arrow-triangle;
+    transform: rotate(90deg);
+    top: 50%;
+    right: 3px;
+    margin-top: -5px;
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+}

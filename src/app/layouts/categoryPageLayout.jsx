@@ -1,16 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import CategoryPage from "../components/categoryComponent/categoryPage/categoryPage";
-import ProductCard from "../components/productCardComponnet/productCard";
 
 const CategoryPageLayout = () => {
-  const { categoryUrl, productId } = useParams();
+  const { categoryUrl, productAll } = useParams();
+
   return (
     <>
-      {categoryUrl && productId ? (
-        <ProductCard productId={productId} />
-      ) : categoryUrl ? (
-        <CategoryPage categoryUrl={categoryUrl} />
+      {categoryUrl && productAll ? (
+        <CategoryPage categoryUrl={categoryUrl} productAll={productAll} />
       ) : (
         <CategoryPage categoryUrl={categoryUrl} />
       )}

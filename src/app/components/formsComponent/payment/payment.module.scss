@@ -1,0 +1,78 @@
+@import "../../../../styles/colors.scss";
+
+.payment {
+  padding: 100px 0 40px 0;
+  background: #fdfdfd;
+  border: 1px solid $quaternary;
+  text-align: center;
+}
+
+.payment__wrapper {
+  margin-bottom: 50px;
+}
+
+.payment_total {
+  font-family: "Georgia Italic";
+  letter-spacing: 1px;
+  margin: 90px 0;
+  font-size: 2.2rem;
+  color: $secondary;
+  text-transform: capitalize;
+}
+
+.payment_sum_total {
+  color: $orange;
+}
+
+.form {
+  font-family: "Lato Regular";
+  font-size: 1.2rem;
+
+  & button {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+}
+
+.form__conteiner {
+  width: 100%;
+  max-width: 610px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.form__field_payment {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  position: relative;
+
+  & label {
+    margin-bottom: 10px;
+    color: $secondary;
+    text-align: start;
+    text-transform: uppercase;
+
+    & span {
+      font-size: 1rem;
+      text-transform: lowercase;
+    }
+  }
+
+  & input {
+    padding: 1.2rem 0.8rem;
+    border-radius: 0;
+  }
+
+  .form__field_payment_icon:first-of-type {
+    right: 80px;
+  }
+}
+
+.form__field_payment_icon {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  bottom: 0.35rem;
+  right: 45px;
+}

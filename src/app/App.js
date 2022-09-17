@@ -5,8 +5,10 @@ import Header from "./components/headerComponnent/header/header";
 import CategoryPageLayout from "./layouts/categoryPageLayout";
 import AboutPageLayout from "./layouts/aboutPageLayout";
 import HomePageLayout from "./layouts/homePageLayout";
-import SignInRegister from "./layouts/signInReister";
 import PageLayout from "./layouts/pageLayout";
+import BasketPageLayout from "./layouts/basketPageLayout";
+import ProductCard from "./components/productCardComponnet/productCard";
+import LoginPageLayout from "./layouts/loginPageLayout";
 
 function App() {
   return (
@@ -16,11 +18,13 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePageLayout} />
           <Route
-            path="/category/:categoryUrl?/:productId?"
+            path="/category/:categoryUrl?/:productAll?"
             component={CategoryPageLayout}
           />
+          <Route path="/product/:productId?" component={ProductCard} />
           <Route path="/about" component={AboutPageLayout} />
-          <Route path="/signIn_register" component={SignInRegister} />
+          <Route path="/basket" component={BasketPageLayout} />
+          <Route path="/login" component={LoginPageLayout} />
           <Redirect to="/" />
         </Switch>
       </PageLayout>

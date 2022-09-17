@@ -1,18 +1,16 @@
 import React from "react";
+import ComponentContainer from "../../common/componentContainer/componentContainer";
 import HomeTitle from "../homeTitle/homeTitle";
 import ShopsNewsLetter from "../shopsNewsletter/shopsNewsletter";
 import ShopTrends from "../shopTrends/shopTrends";
-import style from "./homePage.module.scss";
 
 const HomePage = () => {
   return (
-    <div className={style.home_page}>
-      <div className={style.home_page__conteiner}>
-        <HomeTitle />
-        <ShopTrends />
-        <ShopsNewsLetter />
-      </div>
-    </div>
+    <ComponentContainer>
+      <HomeTitle />
+      <ShopTrends />
+      <ShopsNewsLetter />
+    </ComponentContainer>
   );
 };
 
