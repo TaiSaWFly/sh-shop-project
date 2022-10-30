@@ -96,7 +96,7 @@ button {
       border: 1px solid $primary;
 
       * {
-        fill: $primary;
+        color: $primary;
       }
     }
   }
@@ -139,12 +139,12 @@ button {
       border-color: transparent;
 
       &::after {
-        background: #ff0202;
+        background: $danger;
         transform: rotate(135deg);
       }
 
       &::before {
-        background: #ff0202;
+        background: $danger;
         transform: rotate(45deg);
       }
     }
@@ -162,25 +162,5 @@ button {
       background: transparent;
       border-color: $orange;
     }
-  }
-}
-
-select {
-  display: block;
-  padding: 0.5rem;
-  min-width: 180px;
-  font-family: "Lato Light Italic";
-  font-size: 1.4rem;
-  color: $primary;
-
-  cursor: pointer;
-  appearance: none;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid $primary;
-  background-color: transparent;
-
-  &:focus {
-    border-color: $hoverBlue;
   }
 }

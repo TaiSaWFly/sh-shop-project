@@ -1,0 +1,38 @@
+@import "../../../../../styles/colors.scss";
+@import "../../../../../styles/mixins.scss";
+
+.address_form {
+  font-family: "Lato Regular";
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 100px 0 40px 0;
+
+  background: #fdfdfd;
+  border: 1px solid $quaternary;
+}
+
+.address_form__title {
+  margin-bottom: 50px;
+}
+
+.address_form__conteiner {
+  width: 100%;
+  max-width: 610px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.address_form__field {
+  margin-bottom: 35px;
+}
+
+.address_form__field_collective {
+  display: flex;
+  margin: 0 -10px;
+
+  & .address_form__field {
+    width: 50%;
+    padding: 0 10px;
+    margin-bottom: 35px;
+  }
+}
