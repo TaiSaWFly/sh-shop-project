@@ -15,11 +15,22 @@ const AllProductsPage = ({ state }) => {
     setLoading(true);
 
     setTimeout(() => {
-      const getAllProducts = products.filter((p) => p.category === categoryId);
-      const getAllTypesProducts = getAllProducts.filter(
-        (p) => p.type === typeId
-      );
-      setProducts(getAllTypesProducts);
+      if (typeId) {
+        const getAllProducts = products.filter(
+          (p) => p.category === categoryId
+        );
+        const getAllTypesProducts = getAllProducts.filter(
+          (p) => p.type === typeId
+        );
+        setProducts(getAllTypesProducts);
+      }
+
+      if (!typeId) {
+        const getAllProducts = products.filter(
+          (p) => p.category === categoryId
+        );
+        setProducts(getAllProducts);
+      }
     }, 900);
 
     setTimeout(() => {
