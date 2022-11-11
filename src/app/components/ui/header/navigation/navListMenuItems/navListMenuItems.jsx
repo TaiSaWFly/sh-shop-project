@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import style from "./navListMenuItems.module.scss";
 import DropdownList from "../../dropdown/dropdownList/dropdownList";
 import { Link } from "react-router-dom";
-import { category } from "../../../../../data/category";
+import { collection } from "../../../../../data/basicData/collection";
+import { collectionCategories } from "../../../../../data/basicData/collectionCategories";
+import { findDataId } from "../../../../../utils/findDataId";
 
 const NavListMenuItems = ({ menu }) => {
   const [dropdown, setDropdown] = useState(false);
@@ -10,15 +12,21 @@ const NavListMenuItems = ({ menu }) => {
 
   useEffect(() => {
     if (menu.submenu) {
-      setData(category.find((d) => d.id === menu.category));
+      const findCollection = collection.find((c) => c.id === menu.collection);
+      const getCollectionsCategoriesIds = findDataId(
+        menu.submenu.collectionCategories,
+        collectionCategories
+      );
+      const newData = {
+        ...findCollection,
+        categories: getCollectionsCategoriesIds.categories,
+      };
+      setData(newData);
     } else {
-      setData(category.find((d) => d.id === menu.category));
-    }
-
-    if (!menu.category) {
       setData(menu);
     }
   }, [menu]);
+  // console.log(data);
 
   const handleDropdown = (state) => {
     setDropdown((prevState) => (prevState = state));
@@ -29,7 +37,7 @@ const NavListMenuItems = ({ menu }) => {
       className={style.menu_items}
       onMouseEnter={() => handleDropdown(true)}
       onMouseLeave={() => handleDropdown(false)}>
-      {menu.submenu && menu.category ? (
+      {menu.submenu ? (
         <>
           <div
             className={
@@ -40,31 +48,27 @@ const NavListMenuItems = ({ menu }) => {
             <Link
               className={style.menu_items__title}
               to={{
-                pathname: `/category${data.url}`,
-                state: { categoryId: data.id, name: data.name },
+                pathname: `/collection${data.url}`,
+                state: {
+                  collectionId: data.id,
+                  name: data.name,
+                  categoriesIds: data.categories,
+                },
               }}>
               {data.name}
             </Link>
           </div>
 
           <DropdownList
-            submenus={menu.submenu.typeStyle}
+            submenus={data.categories}
             dropdown={dropdown}
-            category={data.url}
-            categoryId={data.id}
+            collectionUrl={data.url}
+            collectionId={data.id}
+            collectionName={data.name}
           />
         </>
-      ) : menu.category ? (
-        <Link
-          className={style.menu_items__title}
-          to={{
-            pathname: `/category${data.url}`,
-            state: { categoryId: data.id, name: data.name },
-          }}>
-          {data.name}
-        </Link>
       ) : (
-        <Link className={style.menu_items__title} to={`${data.url}`}>
+        <Link className={style.menu_items__title} to={data.url}>
           {data.name}
         </Link>
       )}

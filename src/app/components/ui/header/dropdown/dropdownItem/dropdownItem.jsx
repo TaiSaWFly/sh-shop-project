@@ -1,22 +1,24 @@
 import React from "react";
 import style from "./dropdownItem.module.scss";
-import { types } from "../../../../../data/type";
+import { category } from "../../../../../data/basicData/category";
 import { getDataByIds } from "../../../../../utils/getDataByIds";
 import { Link } from "react-router-dom";
 
-const DropdownItem = ({ data, category: url, categoryId: id }) => {
-  const findCategory = data.find((d) => d.category === id);
-  const categoryType = getDataByIds(findCategory.types, types);
+const DropdownItem = ({ data, collection: url, collectionId: id }) => {
+  const findCollection = data.find((d) => d.collection === id);
+  const collectionType = getDataByIds(findCollection.types, category);
+
+  // console.log(data);
 
   return (
     <>
-      {categoryType.map((c) => (
+      {collectionType.map((c) => (
         <Link
           key={c.id}
           className={style.dropdown_list__link}
           to={{
-            pathname: `/category${url + "/" + c.name}/products`,
-            state: { categoryId: id, typeId: c.id, name: c.name },
+            pathname: `/collection${url + "/" + c.name}/products`,
+            state: { collectionId: id, typeId: c.id, name: c.name },
           }}>
           {c.name}
         </Link>

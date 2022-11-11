@@ -136,6 +136,10 @@
     padding: 0 !important;
   }
 
+  &__single-value {
+    text-transform: capitalize !important;
+  }
+
   &__placeholder {
     font-family: "Montserrat" !important;
     font-size: 1.1rem !important;
@@ -200,6 +204,7 @@
 
   &__option {
     padding: 4px 12px !important;
+    text-transform: capitalize !important;
     cursor: pointer !important;
 
     &--is-selected {

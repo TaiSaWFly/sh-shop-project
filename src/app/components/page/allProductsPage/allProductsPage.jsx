@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { products } from "../../../data/products";
-import ComponentContainer from "../../common/componentContainer/componentContainer";
+import { useLocation, useParams } from "react-router-dom";
+import { products } from "../../../data/basicData/products";
 import Loading from "../../common/loadingComponent/loading";
-import CategoryHeader from "../../ui/categoryComponents/categoryHeader/categoryHeader";
-import ProductFilter from "../../ui/categoryComponents/productFilter/productFilter";
-import ProductItems from "../../ui/categoryComponents/productItems/productItems";
+import CollectionHeader from "../../ui/collectionComponents/collectionHeader/collectionHeader";
+import NoProductsCaregory from "../../ui/collectionComponents/noProductsCaregory/noProductsCaregory";
+import ProductFilter from "../../ui/collectionComponents/productFilter/productFilter";
+import ProductItems from "../../ui/collectionComponents/productItems/productItems";
 
-const AllProductsPage = ({ state }) => {
-  const { categoryId, typeId, name } = state;
+const AllProductsPage = () => {
+  const { state } = useLocation();
+  const { collection: collectionUrl, category: categoryUrl } = useParams();
+
+  const { collectionId, categoryId, name } = state;
   const [allProducts, setProducts] = useState();
   const [isLoading, setLoading] = useState(true);
 
@@ -15,19 +19,19 @@ const AllProductsPage = ({ state }) => {
     setLoading(true);
 
     setTimeout(() => {
-      if (typeId) {
+      if (categoryId) {
         const getAllProducts = products.filter(
+          (p) => p.collection === collectionId
+        );
+        const getAllCateroriesProducts = getAllProducts.filter(
           (p) => p.category === categoryId
         );
-        const getAllTypesProducts = getAllProducts.filter(
-          (p) => p.type === typeId
-        );
-        setProducts(getAllTypesProducts);
+        setProducts(getAllCateroriesProducts);
       }
 
-      if (!typeId) {
+      if (!categoryId) {
         const getAllProducts = products.filter(
-          (p) => p.category === categoryId
+          (p) => p.collection === collectionId
         );
         setProducts(getAllProducts);
       }
@@ -36,23 +40,34 @@ const AllProductsPage = ({ state }) => {
     setTimeout(() => {
       setLoading(false);
     }, 1900);
-  }, [categoryId, typeId]);
+  }, [collectionId, categoryId]);
 
   return (
-    <ComponentContainer>
+    <>
       <h2>
-        AllProductsPage {categoryId} {name}
+        AllProductsPage {collectionUrl} {categoryUrl}
       </h2>
-      <CategoryHeader typeId={typeId} name={name} />
       {!isLoading ? (
         <>
-          <ProductFilter />
-          <ProductItems productsItems={allProducts} />
+          {allProducts.length !== 0 ? (
+            <>
+              <CollectionHeader {...{ categoryId, name }} />
+              <ProductFilter />
+              <ProductItems productsItems={allProducts} />
+            </>
+          ) : (
+            <NoProductsCaregory
+              {...{ name, collectionId, url: collectionUrl }}
+            />
+          )}
         </>
       ) : (
-        <Loading />
+        <>
+          <CollectionHeader {...{ categoryId, name }} />
+          <Loading />
+        </>
       )}
-    </ComponentContainer>
+    </>
   );
 };
 

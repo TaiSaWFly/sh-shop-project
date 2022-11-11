@@ -58,6 +58,21 @@ input {
   }
 }
 
+textarea {
+  font-family: "Montserrat", sans-serif;
+
+  padding: 1.2rem 0.8rem;
+  border: 1px solid #c9c7c7;
+  outline: none;
+  resize: none;
+
+  transition: border-color 0.2s ease-in-out;
+
+  &:focus {
+    border-color: $secondary;
+  }
+}
+
 button {
   display: block;
   padding: 2rem 3rem;

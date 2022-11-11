@@ -6,7 +6,7 @@ const methods = [
   { id: "2", method: methodFilterProducts.newArrivals },
   { id: "3", method: methodFilterProducts.sales },
   { id: "4", method: methodFilterProducts.ofOffers },
-  { id: "5", method: methodFilterProducts.comimgSoon },
+  { id: "5", method: methodFilterProducts.commingSoon },
 ];
 
 export function filterProductsByIdMethod(products, idMethod) {

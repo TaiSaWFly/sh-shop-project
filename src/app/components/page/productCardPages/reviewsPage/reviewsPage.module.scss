@@ -1,0 +1,20 @@
+@import "../../../../../styles/colors.scss";
+
+.reviews_page__add_review {
+  margin-bottom: 20px;
+
+  & button {
+    padding: 1.5rem 2rem;
+    color: $tertiary;
+    background: $hoverBlue;
+    border-color: transparent;
+
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+    &:hover {
+      color: $hoverBlue;
+      background: transparent;
+      border-color: $hoverBlue;
+    }
+  }
+}

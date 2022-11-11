@@ -15,7 +15,10 @@ const methodFilterProducts = {
     const data = products.filter((p) => p.newPrice);
     return data;
   },
-  comimgSoon: (products) => {
+  commingSoon: (products) => {
+    // const d = products.filter((p) => p.popular === id);
+    // console.log(id, d);
+
     const data = [];
     return data;
   },

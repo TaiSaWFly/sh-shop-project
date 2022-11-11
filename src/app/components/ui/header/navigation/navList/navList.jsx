@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./navList.module.scss";
-import { menuItems } from "../../../../../data/menuItems";
+import { menuItems } from "../../../../../data/basicData/menuItems";
 import { ReactComponent as Search } from "../../../../../../assets/svg_icons/search.svg";
 import NavListMenuItems from "../navListMenuItems/navListMenuItems";
 

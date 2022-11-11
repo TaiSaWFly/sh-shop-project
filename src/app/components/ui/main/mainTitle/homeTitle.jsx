@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 const MainTitle = () => {
   const history = useHistory();
   const handleRedirectLink = () => {
-    history.push("/newArrivals");
+    history.push("/newproducts/newarrivals");
   };
 
   return (

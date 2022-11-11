@@ -10,7 +10,7 @@ const Table = ({ columns, dataBody, dataFooter, children }) => {
         <>
           <TableHeader {...{ columns }} />
           <TableBody {...{ columns, dataBody }} />
-          <TableFooter {...{ columns, dataFooter }} />
+          {dataFooter && <TableFooter {...{ columns, dataFooter }} />}
         </>
       )}
     </table>

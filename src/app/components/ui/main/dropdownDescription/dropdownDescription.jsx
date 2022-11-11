@@ -1,5 +1,5 @@
 import React from "react";
-import ProductDescription from "../../../common/productDescription/productDescription";
+import ProductDescriptionShort from "../../../common/productDescriptionShort/productDescriptionShort";
 import style from "./dropdownDescription.module.scss";
 import { CSSTransition } from "react-transition-group";
 
@@ -22,7 +22,7 @@ const DropdownDescription = ({ product, dropdown }) => {
       mountOnEnter
       unmountOnExit>
       <div>
-        <ProductDescription
+        <ProductDescriptionShort
           {...{
             id: product.id,
             name: product.name,

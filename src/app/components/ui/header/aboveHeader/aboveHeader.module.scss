@@ -53,22 +53,18 @@
   }
 }
 
-.above_header__link__register_sign_in {
+.above_header__link__wrapper {
   display: flex;
   padding: 15px 0;
 }
 
-.above_header__link_register {
+.above_header__link_actions {
   margin-right: 30px;
   transition: color 0.2s ease-in-out;
 
-  &:hover {
-    color: $hoverBlue;
+  &:last-of-type {
+    margin-right: 0;
   }
-}
-
-.above_header__link_sign_in {
-  transition: color 0.2s ease-in-out;
 
   &:hover {
     color: $hoverBlue;

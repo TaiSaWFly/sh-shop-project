@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ComponentContainer from "../../common/componentContainer/componentContainer";
 import BasketTable from "../../ui/basketComponents/basketTable/basketTable";
@@ -6,10 +6,16 @@ import style from "./basketPage.module.scss";
 import NextActionDecor from "../../common/nextActionDecor/nextActionDecor";
 import TitleComponent from "../../common/titleComponent/titleComponent";
 import Button from "../../common/buttonComponent/button";
-import AddressForm from "../../ui/forms/addressForm/addressForm";
 import PaymentForm from "../../ui/forms/paymentForm/paymentForm";
+import BasketChooseDelivery from "../../ui/basketComponents/basketChooseDelivery/basketChooseDelivery";
 
 const BasketPage = () => {
+  const [proceed, setProceed] = useState(false);
+
+  const toggleProceed = () => {
+    setProceed((pverState) => !pverState);
+  };
+
   return (
     <ComponentContainer>
       <h2>BasketPage</h2>
@@ -24,13 +30,19 @@ const BasketPage = () => {
           <BasketTable />
           <div className={style.basket_table__action}>
             <Link to="/">Continue Shopping</Link>
-            <Button className={"button_table__order"}>order now</Button>
+            <Button onAction={toggleProceed} className={"button_table__order"}>
+              {!proceed ? "order now" : "do not order"}
+            </Button>
           </div>
 
-          <NextActionDecor />
-          <AddressForm />
-          <NextActionDecor />
-          <PaymentForm />
+          {proceed ? (
+            <>
+              <NextActionDecor />
+              <BasketChooseDelivery />
+              <NextActionDecor />
+              <PaymentForm />
+            </>
+          ) : null}
         </div>
       </div>
     </ComponentContainer>

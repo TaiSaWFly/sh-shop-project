@@ -1,5 +1,5 @@
 import React from "react";
-import { footerList } from "../../../../data/footerList";
+import { footerList } from "../../../../data/initDataForPage/footerList";
 import { Link } from "react-router-dom";
 import { ReactComponent as VkSocial } from "../../../../../assets/svg_icons/vk_social.svg";
 import { ReactComponent as FaceboofSocial } from "../../../../../assets/svg_icons/facebook_social.svg";
@@ -18,7 +18,9 @@ const Footer = () => {
 
               {list.list.map((listItem, index) => (
                 <li key={index} className={style.footer__list_link}>
-                  <Link to="/">{listItem.name}</Link>
+                  <Link to={listItem.path ? listItem.path : "/"}>
+                    {listItem.name}
+                  </Link>
                 </li>
               ))}
             </ul>

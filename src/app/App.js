@@ -2,38 +2,44 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Footer from "./components/ui/footer/footerComponent/footer";
 import Header from "./components/ui/header/headerComponent/header";
-import CategoryLayout from "./layouts/categoryLayout";
+import CollectionLayout from "./components/layouts/collectionLayout";
 import AboutPage from "./components/page/aboutPage/aboutPage";
 import BasketPage from "./components/page/basketPage/basketPage";
 import MainPage from "./components/page/mainPage/mainPage";
-import PageLayout from "./layouts/pageLayout";
-import ProductCard from "./components/ui/productCard/productCard";
-import LoginLayout from "./layouts/loginLayout";
-import NewArrivalsPage from "./components/page/newArrivalsPage/newArrivalsPage";
+import PageLayout from ".//components/layouts/pageLayout";
+import AuthLayout from "./components/layouts/authLayout/authLayout";
+import AccountLayout from "./components/layouts/accountLayout/accountLayout";
+import ContactPage from "./components/page/contactPage/contactPage";
+import ProductCardLayout from "./components/layouts/productCardLayout/productCardLayout";
+import AuthProvider from "./components/hooks/useAuth";
+import ProtectedRoute from "./components/common/protectedRoutes/protectedRoute";
+import NewProductsLayout from "./components/layouts/newProductsLayout";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Header />
       <PageLayout>
         <Switch>
           <Route path="/" exact component={MainPage} />
-          <Route path="/login" component={LoginLayout} />
-          <Route path="/register" component={LoginLayout} />
-          <Route
-            path="/category/:category?/:products?"
-            component={CategoryLayout}
+          <Route path="/auth" component={AuthLayout} />
+          <ProtectedRoute
+            path="/account"
+            component={AccountLayout}
+            redirect="/auth"
           />
-          <Route path="/product/:productId?" component={ProductCard} />
+          <Route path="/collection" component={CollectionLayout} />
+          <Route path="/product/:productId?" component={ProductCardLayout} />
           <Route path="/basket" component={BasketPage} />
+          <Route path="/newproducts/:arrivals?" component={NewProductsLayout} />
           <Route path="/about" component={AboutPage} />
-          <Route path="/newArrivals" component={NewArrivalsPage} />
+          <Route path="/contact" component={ContactPage} />
 
-          <Redirect to="/" />
+          <Redirect to="/" from="*" />
         </Switch>
       </PageLayout>
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

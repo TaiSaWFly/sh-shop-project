@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import style from "./form.module.scss";
 import { ReactComponent as EyeSlash } from "../../../../../../node_modules/bootstrap-icons/icons/eye-slash-fill.svg";
 import { ReactComponent as Eye } from "../../../../../../node_modules/bootstrap-icons/icons/eye-fill.svg";
-import Button from "../../buttonComponent/button";
 
 const TextField = ({ name, label, subLabel, type, value, onChange }) => {
   const [showPassword, setShowPassword] = useState(false);
+
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -20,6 +20,9 @@ const TextField = ({ name, label, subLabel, type, value, onChange }) => {
         {label} {subLabel ? <span>{subLabel}</span> : null}
       </label>
       <input
+        className={
+          type === "number" ? style.input__field_number : style.input__field
+        }
         type={showPassword ? "text" : type}
         id={name}
         name={name}
@@ -27,13 +30,13 @@ const TextField = ({ name, label, subLabel, type, value, onChange }) => {
         onChange={handleChange}
       />
       {type === "password" && (
-        <Button
+        <div
           className={
             showPassword ? style.form__show_password : style.form__hide_password
           }
-          onAction={toggleShowPassword}>
+          onClick={toggleShowPassword}>
           {showPassword ? <Eye /> : <EyeSlash />}
-        </Button>
+        </div>
       )}
     </div>
   );

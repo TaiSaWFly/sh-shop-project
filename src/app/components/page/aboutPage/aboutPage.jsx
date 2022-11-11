@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./aboutPage.module.scss";
-import { about } from "../../../data/aboute";
+import { about } from "../../../data/initDataForPage/aboute";
 import TitleComponent from "../../common/titleComponent/titleComponent";
 
 const AboutPage = () => {

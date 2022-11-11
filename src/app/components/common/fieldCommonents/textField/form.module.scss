@@ -17,16 +17,28 @@
       text-transform: lowercase;
     }
   }
+}
 
-  & input {
-    padding: 1.2rem 0.8rem;
-    border-radius: 0;
+.input__field {
+  padding: 1.2rem 0.8rem;
+  border-radius: 0;
+}
+
+.input__field_number {
+  padding: 1.2rem 0.8rem;
+  border-radius: 0;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
   }
 }
 
 .form__hide_password {
   padding: 0;
   border: transparent;
+  cursor: pointer;
 
   position: absolute;
   right: 15px;
@@ -42,6 +54,7 @@
   padding: 0;
   border: transparent;
   color: $danger;
+  cursor: pointer;
 
   position: absolute;
   right: 15px;

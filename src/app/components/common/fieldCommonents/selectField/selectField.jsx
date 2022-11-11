@@ -39,6 +39,7 @@ const SelectField = ({
         placeholder={placeholder}
         onChange={handleChange}
         isClearable={true}
+        maxMenuHeight={190}
       />
     </div>
   );
