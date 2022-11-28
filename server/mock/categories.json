@@ -1,0 +1,19 @@
+[
+  { "id": "category_1", "name": "Jackets", "path": "jackets" },
+  {
+    "id": "category_2",
+    "name": "Hoodies & Sweatshirts",
+    "path": "hoodies_&_sweatshirts"
+  },
+  { "id": "category_3", "name": "Polo Shirts", "path": "polo_shirts" },
+  { "id": "category_4", "name": "Sportswear", "path": "sportswear" },
+  {
+    "id": "category_5",
+    "name": "Trousers & Chinos",
+    "path": "trousers_&_chinos"
+  },
+  { "id": "category_6", "name": "T-Shirts", "path": "t_shirts" },
+  { "id": "category_7", "name": "Shirts", "path": "shirts" },
+  { "id": "category_8", "name": "Suits", "path": "suits" },
+  { "id": "category_9", "name": "Trousers", "path": "trousers" }
+]
