@@ -1,37 +1,42 @@
 import React from "react";
 import style from "./collectionCategories.module.scss";
-import ProductItems from "../productItems/productItems";
-import { definedLengthArray } from "../../../../utils/definedLengthArray";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import CategoryProducts from "../categoryProducts/categoryProducts";
+import { getProductLoadingStatus } from "../../../../store/slices/product";
+import Loading from "../../../common/loadingComponent/loading";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const CollectionCategories = ({ collectionPath: path, collection }) => {
-  const checkEmptyProducts = collection.filter((c) => c.products.length > 0);
-  const definedCollections = checkEmptyProducts.map((c) => ({
-    ...c,
-    products: definedLengthArray(c.products),
-  }));
+const CollectionCategories = ({ collectionPath, categories }) => {
+  const [categoriesData, setCategories] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const isLoadingProducts = useSelector(getProductLoadingStatus());
+
+  useEffect(() => {
+    setIsLoading(true);
+    setCategories(categories);
+  }, [collectionPath, categories]);
+
+  useEffect(() => {
+    if (categoriesData && !isLoadingProducts) {
+      setIsLoading(false);
+    }
+  }, [categoriesData, isLoadingProducts]);
 
   return (
-    <div className={style.collection_categories}>
-      {definedCollections.map((c) => (
-        <div key={c.id} className={style.collection_category__wrapper}>
-          <div className={style.collection_category__info}>
-            <div className={style.collection_category__info_title}>
-              {c.name}
+    <>
+      {!isLoading ? (
+        <div className={style.collection_categories}>
+          {categories.map((c) => (
+            <div key={c.id}>
+              <CategoryProducts category={c} collectionPath={collectionPath} />
             </div>
-            <div className={style.collection_category__info_show_more}>
-              <Link
-                to={{
-                  pathname: `/collection/${path + "/" + c.path}/products`,
-                }}>
-                show more
-              </Link>
-            </div>
-          </div>
-          <ProductItems productsItems={c.products} />
+          ))}
         </div>
-      ))}
-    </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 

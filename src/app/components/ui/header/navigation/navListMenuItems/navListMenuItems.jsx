@@ -12,7 +12,7 @@ const NavListMenuItems = ({ menu }) => {
         className={style.menu_items}
         onMouseEnter={() => setDropdown(true)}
         onMouseLeave={() => setDropdown(false)}>
-        {menu.categories ? (
+        {menu.categories && menu.categories.length !== 0 ? (
           <>
             <div
               className={
@@ -36,7 +36,7 @@ const NavListMenuItems = ({ menu }) => {
               collectionName={menu.name}
             />
           </>
-        ) : menu.categories === null ? (
+        ) : menu.categories && menu.categories.length === 0 ? (
           <Link
             className={style.menu_items__title}
             to={{

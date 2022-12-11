@@ -3,8 +3,13 @@ import style from "./dropdownList.module.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import api from "../../../../../api";
 import Loading from "../../../../common/loadingComponent/loading";
+// import categoryService from "../../../../../services/category.service";
+import { useSelector } from "react-redux";
+import {
+  getCategoryByIds,
+  getCategoryLoadingStatus,
+} from "../../../../../store/slices/category";
 
 const DropdownList = ({
   submenus,
@@ -13,11 +18,12 @@ const DropdownList = ({
   collectionName: name,
 }) => {
   const [submenusItems, setSubmenusItems] = useState();
+  const categorySelectorData = useSelector(getCategoryByIds(submenus));
+  const isLoadingCategory = useSelector(getCategoryLoadingStatus());
 
   useEffect(() => {
-    api.collectionCategories
-      .getCategoryByCollectionCategoryId(...submenus)
-      .then((data) => setSubmenusItems(data));
+    setSubmenusItems(categorySelectorData);
+    // eslint-disable-next-line
   }, [submenus]);
 
   return (
@@ -27,7 +33,7 @@ const DropdownList = ({
       }>
       <div className={style.dropdown_list__title}>{name}</div>
       <ul className={style.dropdown_list__item}>
-        {submenusItems ? (
+        {!isLoadingCategory && submenusItems ? (
           submenusItems.map((s) => (
             <li key={s.id} className={style.dropdown_list__wrapper}>
               <Link

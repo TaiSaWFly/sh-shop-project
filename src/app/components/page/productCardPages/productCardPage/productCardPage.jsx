@@ -23,6 +23,7 @@ const ProductCardPage = ({ product, productId }) => {
     size,
     color,
   } = product;
+
   const [reviewsLength, setReviewsLength] = useState();
   const [addProduct, setAddProduct] = useState();
 
@@ -38,9 +39,11 @@ const ProductCardPage = ({ product, productId }) => {
       id: productId,
       imgUrl: product.imgUrl,
       name: product.name,
-      price: product.prices.newPrice
+      price: product.prices
         ? product.prices.newPrice
-        : product.prices.price,
+          ? product.prices.newPrice
+          : product.prices.price
+        : null,
       articleNumber: product.articleNumber,
       quantity: 1,
     });

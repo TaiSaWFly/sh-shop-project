@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import style from "./navList.module.scss";
 import { ReactComponent as Search } from "../../../../../../assets/svg_icons/search.svg";
 import NavListMenuItems from "../navListMenuItems/navListMenuItems";
 import Loading from "../../../../common/loadingComponent/loading";
-import api from "../../../../../api";
+import { useSelector } from "react-redux";
+import {
+  getNavigateMenu,
+  getNavigateMenuLoadingStatus,
+} from "../../../../../store/slices/navigateMenu";
 
 const NavList = () => {
-  const [menus, setMenus] = useState();
-
-  useEffect(() => {
-    api.navigateMenus.getMenusItems().then((data) => setMenus(data));
-  }, []);
+  const menus = useSelector(getNavigateMenu());
+  const isLoadingMenus = useSelector(getNavigateMenuLoadingStatus());
 
   return (
     <>
-      {menus ? (
+      {!isLoadingMenus ? (
         <ul className={style.nav_list}>
           {menus.map((menu) => (
             <NavListMenuItems menu={menu} key={menu.id} />

@@ -149,7 +149,7 @@ const SignupPage = () => {
             <Button isDisabled={!isValid}>sign up</Button>
 
             <div>
-              <Link to="/auth/login">i have an account</Link>
+              <Link to="/auth/signin">i have an account</Link>
             </div>
           </div>
         </form>

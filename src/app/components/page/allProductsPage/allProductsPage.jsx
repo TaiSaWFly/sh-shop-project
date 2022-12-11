@@ -54,6 +54,7 @@ const AllProductsPage = () => {
 
   useEffect(() => {
     if (allProducts) {
+      console.log(allProducts);
       setLoading(false);
     }
   }, [allProducts]);
