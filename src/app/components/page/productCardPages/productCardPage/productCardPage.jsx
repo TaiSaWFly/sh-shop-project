@@ -34,7 +34,6 @@ const ProductCardPage = ({ product, productId }) => {
 
   return (
     <>
-      <h2>{productId}</h2>
       <div className={style.product_card_page}>
         <div className={style.product_card_page__wrapper}>
           <div className={style.product_card_page__item}>
