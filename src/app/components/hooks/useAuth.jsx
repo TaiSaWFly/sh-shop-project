@@ -8,7 +8,7 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const [isAuth, setAuth] = useState(true); // change by hand
+  const [isAuth, setAuth] = useState(false); // change by hand
   const currentUserId = "user_1"; // change by hand
   const [currentUser, setCurrentUser] = useState();
   const [isLoading, setIsLoading] = useState(true);

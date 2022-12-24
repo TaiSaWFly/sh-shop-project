@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "./collectionCategories.module.scss";
 import { useSelector } from "react-redux";
 import CategoryProducts from "../categoryProducts/categoryProducts";
 import { getProductLoadingStatus } from "../../../../store/slices/product";
 import Loading from "../../../common/loadingComponent/loading";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const CollectionCategories = ({ collectionPath, categories }) => {
-  const [categoriesData, setCategories] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [categoriesData, setCategories] = useState();
   const isLoadingProducts = useSelector(getProductLoadingStatus());
 
   useEffect(() => {
@@ -28,7 +26,7 @@ const CollectionCategories = ({ collectionPath, categories }) => {
       {!isLoading ? (
         <div className={style.collection_categories}>
           {categories.map((c) => (
-            <div key={c.id}>
+            <div key={c._id}>
               <CategoryProducts category={c} collectionPath={collectionPath} />
             </div>
           ))}

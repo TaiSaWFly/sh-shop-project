@@ -1,13 +1,14 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
+import history from "../utils/history";
 
 const withRouter =
   (Component) =>
   ({ ...props }) => {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Component {...props} />
-      </BrowserRouter>
+      </Router>
     );
   };
 

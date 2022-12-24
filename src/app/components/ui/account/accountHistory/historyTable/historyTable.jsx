@@ -1,31 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import BackButton from "../../../../common/buttonComponent/backButton";
 import Table from "../../../../common/tableComponent/table/table";
 import HistoryProducts from "../historyProducts/historyProducts";
 import style from "./historyTable.module.scss";
 import { parseDate } from "../../../../../utils/parseDate";
-import { useEffect } from "react";
 import Loading from "../../../../common/loadingComponent/loading";
-import api from "../../../../../api";
 import Price from "../../../../common/priceComponent/price";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getIsLoadingStatusHistory,
+  getOrderHistory,
+  loadOrderHistoryUser,
+} from "../../../../../store/slices/user";
 
-const HistoryTable = ({ userId }) => {
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+const HistoryTable = () => {
+  const dispatch = useDispatch();
+  const userHistory = useSelector(getOrderHistory());
+  const isLoadingHistory = useSelector(getIsLoadingStatusHistory());
 
   useEffect(() => {
-    setIsLoading(true);
-    api.historyPurchase
-      .getHistoryByUserId(userId)
-      .then((data) => setData(data));
-  }, [userId]);
-
-  useEffect(() => {
-    if (data) {
-      setIsLoading(false);
-      console.log(data);
-    }
-  }, [data]);
+    dispatch(loadOrderHistoryUser());
+    // eslint-disable-next-line
+  }, []);
 
   const columns = {
     order: {
@@ -38,7 +34,7 @@ const HistoryTable = ({ userId }) => {
     },
     products: {
       name: "products",
-      component: (h) => <HistoryProducts productsIds={h.products} />,
+      component: (h) => <HistoryProducts products={h.products} />,
     },
     status: {
       name: "status",
@@ -46,7 +42,9 @@ const HistoryTable = ({ userId }) => {
     },
     shipDate: {
       name: "ship date",
-      component: (h) => <div>{parseDate(h.shipDate)} </div>,
+      component: (h) => (
+        <div>{h.shipDate !== "" ? parseDate(h.shipDate) : "no SHIP DATE"}</div>
+      ),
     },
     total: {
       name: "total amount",
@@ -61,10 +59,16 @@ const HistoryTable = ({ userId }) => {
         urlBack="/account">
         go back
       </BackButton>
-      {!isLoading ? (
-        <div className={style.history_table}>
-          <Table columns={columns} dataBody={data} />
-        </div>
+      {!isLoadingHistory ? (
+        <>
+          {userHistory && userHistory.length !== 0 ? (
+            <div className={style.history_table}>
+              <Table columns={columns} dataBody={userHistory} />
+            </div>
+          ) : (
+            <>History Empty</>
+          )}
+        </>
       ) : (
         <Loading />
       )}

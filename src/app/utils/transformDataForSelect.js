@@ -1,4 +1,4 @@
 export function transformDataForSelect(data) {
-  const transformData = data.map((d) => ({ value: d.id, label: d.name }));
+  const transformData = data.map((d) => ({ value: d._id, label: d.name }));
   return transformData;
 }

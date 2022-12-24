@@ -16,3 +16,28 @@
     font-size: 2rem;
   }
 }
+
+.empty_reviews_list__link {
+  display: inline;
+  color: $orange;
+  position: relative;
+
+  &:hover {
+    &::after {
+      min-width: 100%;
+    }
+  }
+
+  &::after {
+    content: "";
+    min-width: 0%;
+    height: 1px;
+    background: $orange;
+
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+
+    transition: min-width 0.3s ease-in-out;
+  }
+}

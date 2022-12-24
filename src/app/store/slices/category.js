@@ -27,39 +27,47 @@ const { categoryRequested, categoryReceved, categoryRecevedFalied } = actions;
 export const loadCategory = () => async (dispatch) => {
   dispatch(categoryRequested());
   try {
-    const { content } = await categoryService.fetchAll();
+    const { content } = await categoryService.getList();
     dispatch(categoryReceved(content));
   } catch (error) {
     dispatch(categoryRecevedFalied());
   }
 };
 
+// Selectors
+
 export const getCategoryByIds = (ids) => (state) => {
   if (state.category.entities) {
     const categoryArray = [];
     for (const id in ids) {
       for (const category in state.category.entities) {
-        if (ids[id] === state.category.entities[category].id) {
+        if (ids[id] === state.category.entities[category]._id) {
           categoryArray.push(state.category.entities[category]);
           break;
         }
       }
     }
 
-    // dbug
-    const dbug = [categoryArray[2]];
-    // console.log(dbug);
-
     return categoryArray;
   }
 };
+
 export const getCategoryIdByCategoryPath = (path) => (state) => {
   let categoryId;
   if (state.category.entities) {
-    categoryId = state.category.entities.find((e) => e.path === path).id;
+    categoryId = state.category.entities.find((e) => e.path === path)._id;
   }
 
   return categoryId;
+};
+
+export const getCategoryByPath = (path) => (state) => {
+  let category;
+  if (state.category.entities) {
+    category = state.category.entities.find((e) => e.path === path);
+  }
+
+  return category;
 };
 
 export const getCategoryLoadingStatus = () => (state) =>

@@ -1,11 +1,11 @@
 import * as yup from "yup";
 
 export const loginSchema = yup.object().shape({
-  password: yup.string().required("Поле обезательно для заполнения"),
+  password: yup.string().required("The field is required to fill"),
   email: yup
     .string()
-    .required("Поле обезательно для заполнения")
-    .email("email введёт некоректно"),
+    .required("The field is required to fill")
+    .email("Email entered incorrectly"),
 });
 
 export const signupSchema = yup.object().shape({
@@ -15,30 +15,52 @@ export const signupSchema = yup.object().shape({
       [true],
       "You cannot use our service without confirming the license agreement"
     ),
-  country: yup.object().nullable().required("Поле обезательно для заполнения"),
+  country: yup.object().nullable().required("The field is required to fill"),
   confirmPassword: yup
     .string()
-    .required("Поле обезательно для заполнения")
-    .oneOf([yup.ref("password")], "Пароль не совпадает c текущим"),
+    .required("The field is required to fill")
+    .oneOf([yup.ref("password")], "Password does not match current"),
   password: yup
     .string()
-    .required("Поле обезательно для заполнения")
-    .matches(/^[^а-яА-Я]*$/g, "Пароль должен содержать только латинские буквы")
-    .matches(/[A-Z]/g, "Пароль должен содержать 1 заглавную букву")
-    .matches(/[0-9]+/g, "Пароль должен содержать 1 цифру")
-    .matches(/^[^ ]*$/g, "Пароль не должен содержать символ 'пробел' ")
-    .min(8, "Пароль должен состоять из 8 символов"),
+    .required("The field is required to fill")
+    .matches(/^[^а-яА-Я]*$/g, "Password must contain only latin letters")
+    .matches(/[A-Z]/g, "Password must contain 1 capital letter")
+    .matches(/[0-9]+/g, "Password must contain 1 digit")
+    .matches(/^[^ ]*$/g, "Password must not contain a ' space ' character")
+    .min(8, "Password must be 8 characters"),
   email: yup
     .string()
-    .required("Поле обезательно для заполнения")
-    .email("email введёт некоректно"),
-  accountName: yup
+    .required("The field is required to fill")
+    .email("Email entered incorrectly"),
+  userName: yup
     .string()
-    .required("Поле обезательно для заполнения")
-    .min(3, "Имя пользователя должно состоять хотя бы из 3 символов")
-    .max(16, "Имя пользователя не должно состоять более чем 16 символов"),
+    .required("The field is required to fill")
+    .min(3, "Username must be at least 3 characters")
+    .max(16, "Username must not exceed 16 characters"),
+});
+
+export const editUserSchema = yup.object().shape({
+  country: yup.object().nullable().required("The field is required to fill"),
+  email: yup
+    .string()
+    .required("The field is required to fill")
+    .email("Email entered incorrectly"),
+  userName: yup
+    .string()
+    .required("The field is required to fill")
+    .min(3, "Username must be at least 3 characters")
+    .max(16, "Username must not exceed 16 characters"),
+});
+
+export const requestForReceivedOrderFormSchema = yup.object().shape({
+  phone: yup.string().required("The field is required to fill"),
+  email: yup
+    .string()
+    .required("The field is required to fill")
+    .email("Email entered incorrectly"),
+  userName: yup.string().required("The field is required to fill"),
 });
 
 export const courierFormSchema = yup.object().shape({
-  firstName: yup.string().required("Поле обезательно для заполнения"),
+  firstName: yup.string().required("The field is required to fill"),
 });

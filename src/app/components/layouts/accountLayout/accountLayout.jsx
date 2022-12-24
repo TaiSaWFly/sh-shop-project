@@ -8,11 +8,13 @@ import AccountMenu from "../../ui/account/accountMenu/accountMenu";
 import TitleComponent from "../../common/titleComponent/titleComponent";
 import AccountHistory from "../../ui/account/accountHistory/accountHistory";
 import AccountFavourite from "../../ui/account/accountFavourite/accountFavourite";
-import { useAuth } from "../../hooks/useAuth";
 import Loading from "../../common/loadingComponent/loading";
+import { useSelector } from "react-redux";
+import { getIsLoadingStatusUser, getUser } from "../../../store/slices/user";
 
 const AccountLayout = () => {
-  const { currentUser, isLoading } = useAuth();
+  const user = useSelector(getUser());
+  const isLoadingUser = useSelector(getIsLoadingStatusUser());
 
   return (
     <ComponentContainer>
@@ -20,10 +22,10 @@ const AccountLayout = () => {
         <TitleComponent title="Account" />
       </div>
 
-      {!isLoading ? (
+      {!isLoadingUser ? (
         <div className={style.account_layout}>
           <div className={style.account_user}>
-            <AccountUser user={currentUser} />
+            <AccountUser {...{ user }} />
           </div>
 
           <div className={style.account_menus}>
@@ -31,13 +33,10 @@ const AccountLayout = () => {
               <Route exact path="/account" component={AccountMenu} />
               <Route
                 path="/account/edit"
-                component={() => AccountEdit({ ...{ user: currentUser } })}
+                component={() => AccountEdit({ ...{ user } })}
               />
               <Route path="/account/favourite" component={AccountFavourite} />
-              <Route
-                path="/account/history"
-                component={() => AccountHistory({ ...{ user: currentUser } })}
-              />
+              <Route path="/account/history" component={AccountHistory} />
             </Switch>
           </div>
         </div>

@@ -1,14 +1,5 @@
 export const footerList = [
   {
-    title: "collection",
-    list: [
-      { name: "Woman(!length!)" },
-      { name: "Men(!length!)" },
-      { name: "Kids(!length!)" },
-      { name: "Comming Soon(!length!)" },
-    ],
-  },
-  {
     title: "site",
     list: [
       { name: "Terms of Service" },

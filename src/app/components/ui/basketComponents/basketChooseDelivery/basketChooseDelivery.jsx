@@ -1,12 +1,10 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { transformDataForSelect } from "../../../../utils/transformDataForSelect";
 import SelectField from "../../../common/fieldCommonents/selectField/selectField";
 import TitleComponent from "../../../common/titleComponent/titleComponent";
 import CourierForm from "../../forms/deliveryForms/courierForm/courierForm";
 import CourierTransportCompanyForm from "../../forms/deliveryForms/courierTransportCompanyForm/courierTransportCompanyForm";
-import PickupPoint from "../../forms/deliveryForms/pickupPoint/pickupPoint";
+import RequestForReceivedOrder from "../../forms/deliveryForms/requestForReceivedOrder/requestForReceivedOrder";
 import style from "./basketChooseDelivery.module.scss";
 
 const RenderActiveForm = ({
@@ -19,26 +17,28 @@ const RenderActiveForm = ({
   useEffect(() => {
     if (currentOption) {
       setActive(optionId === currentOption.value ? true : false);
+    } else {
+      setActive(false);
     }
   }, [optionId, currentOption]);
 
-  return <>{isActive ? <Component /> : null}</>;
+  return <>{isActive && <Component />}</>;
 };
 
-const BasketChooseDelivery = () => {
+const BasketChooseDelivery = ({ user, totalAmount }) => {
   const optionDeliveryMethods = [
     {
-      id: "1",
+      _id: "1",
+      name: "request for received your order",
+      component: () => <RequestForReceivedOrder {...{ user }} />,
+    },
+    {
+      _id: "2",
       name: "courier",
       component: () => <CourierForm />,
     },
     {
-      id: "2",
-      name: "pickup point",
-      component: () => <PickupPoint />,
-    },
-    {
-      id: "3",
+      _id: "3",
       name: "courier transport company",
       component: () => <CourierTransportCompanyForm />,
     },
@@ -51,10 +51,6 @@ const BasketChooseDelivery = () => {
     setMethod(target.value);
   };
 
-  // "courier"
-  // address of the pick-up point
-  // shipping address
-
   return (
     <div className={style.choose_delivery}>
       <div className={style.choose_delivery__title}>
@@ -62,6 +58,12 @@ const BasketChooseDelivery = () => {
           title={method ? "shipping address" : "choose a delivery method"}
           subtitle={method ? "All fields are required" : ""}
         />
+
+        <div className={style.choose_delivery_total}>
+          <p>
+            total: <span>&pound;{totalAmount}</span>
+          </p>
+        </div>
       </div>
 
       <div className={style.choose_delivery__conteiner}>
@@ -70,7 +72,7 @@ const BasketChooseDelivery = () => {
             label="delivery method"
             name="method"
             options={optionsMethods}
-            value={method || ""}
+            value={method}
             placeholder="choose method"
             onChange={handleChangeMethod}
           />
@@ -78,8 +80,8 @@ const BasketChooseDelivery = () => {
 
         {optionDeliveryMethods.map((o) => (
           <RenderActiveForm
-            key={o.id}
-            optionId={o.id}
+            key={o._id}
+            optionId={o._id}
             component={o.component}
             currentOption={method}
           />

@@ -1,18 +1,32 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import style from "./loginPage.module.scss";
 import TitleComponent from "../../../common/titleComponent/titleComponent";
 import TextField from "../../../common/fieldCommonents/textField/textField";
 import Button from "../../../common/buttonComponent/button";
-import { useEffect } from "react";
 import { loginSchema } from "../../../../utils/yupSchema";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearAuthError,
+  getAuthErrors,
+  logIn,
+} from "../../../../store/slices/user";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const authErrors = useSelector(getAuthErrors());
+
   const [data, setData] = useState({
     email: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    dispatch(clearAuthError());
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     validate();
@@ -40,12 +54,22 @@ const LoginPage = () => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
-    console.log(data);
+
+    const redirect = history.location.state
+      ? history.location.state.from.pathname
+      : "/";
+
+    dispatch(logIn({ payload: data, redirect }));
   };
 
   return (
     <div className={style.login_page}>
       <TitleComponent title={"sign in"} />
+
+      {authErrors && (
+        <div className={style.login_page__error}>{authErrors}</div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className={style.login_form__field}>
           <TextField

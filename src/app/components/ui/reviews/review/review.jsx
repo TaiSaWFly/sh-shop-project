@@ -2,14 +2,25 @@ import React, { useState, useEffect } from "react";
 import style from "./review.module.scss";
 import UserReviewer from "../userReviewer/userReviewer";
 import { displayDate } from "../../../../utils/displayDate";
-import api from "../../../../api";
 import Loading from "../../../common/loadingComponent/loading";
+import userService from "../../../../services/user.service";
+import Button from "../../../common/buttonComponent/button";
+import { useSelector } from "react-redux";
+import { getAuthUserId } from "../../../../store/slices/user";
 
-const Review = ({ userId, created_at: created, content }) => {
+const Review = ({
+  _id: reviewId,
+  userId,
+  created_at: created,
+  content,
+  isLoggedIn,
+  handleDeleteReview,
+}) => {
   const [user, setUser] = useState();
+  const authUserId = useSelector(getAuthUserId());
 
   useEffect(() => {
-    api.users.getUserById(userId).then((data) => setUser(data));
+    userService.getUser(userId).then((data) => setUser(data.content));
   }, [userId]);
 
   return (
@@ -29,6 +40,17 @@ const Review = ({ userId, created_at: created, content }) => {
                 {displayDate(created)}
               </div>
             </div>
+            {isLoggedIn && (
+              <>
+                {user._id === authUserId && (
+                  <div className={style.review__delete}>
+                    <Button
+                      onAction={() => handleDeleteReview(reviewId)}
+                      className={"button_table__delete"}></Button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       ) : (

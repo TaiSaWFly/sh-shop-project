@@ -1,141 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TextField from "../../../common/fieldCommonents/textField/textField";
 import style from "./editProfileForm.module.scss";
-import SelectField from "../../../common/fieldCommonents/selectField/selectField";
 import Button from "../../../common/buttonComponent/button";
 import BackButton from "../../../common/buttonComponent/backButton";
-// import { usersAddress } from "../../../../data/accountData/usersAddress";
 import Loading from "../../../common/loadingComponent/loading";
-import AddNewAddressForm from "../addNewAddressForm/addNewAddressForm";
-import api from "../../../../api";
-
-const defaultOptions = [
-  {
-    value: "add",
-    label: "Add New Address",
-  },
-];
+import { updateUser } from "../../../../store/slices/user";
+import { getCountryForSelect } from "../../../../store/slices/country";
+import SelectField from "../../../common/fieldCommonents/selectField/selectField";
+import { editUserSchema } from "../../../../utils/yupSchema";
 
 const EditProfileForm = ({ user }) => {
-  const [data, setData] = useState();
-  const [options, setOptions] = useState(defaultOptions);
-  const [addAddress, setAddAddress] = useState(false);
-  const [address, setAddress] = useState();
-  const [currentAddress, setCurrentAddress] = useState();
-  const [currentUser, setUser] = useState();
+  const dispatch = useDispatch();
+  const redirect = "/account";
+
+  const countriesOptions = useSelector(getCountryForSelect());
+  const userCountry = countriesOptions.find((c) => c.value === user.country);
+
+  const [data, setData] = useState({
+    userName: user.userName,
+    email: user.email,
+    country: userCountry,
+  });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    api.usersAddress
-      .getUsersAddressesByUserId(user.id)
-      .then((data) => setAddress(data));
-    api.usersAddress
-      .getCurrentAddressById(user.currentAddress)
-      .then((data) => setCurrentAddress(data));
-
-    setUser(user);
-  }, [user]);
-
-  useEffect(() => {
-    if (address && currentAddress && user) {
-      const transformAddresses = address.map((a) => ({
-        value: a.id,
-        label: renderUserAddress(a),
-      }));
-
-      setData({
-        userName: user.userName,
-        email: user.email,
-        address: currentAddress
-          ? {
-              value: currentAddress.id,
-              label: renderUserAddress(currentAddress),
-            }
-          : "",
-      });
-      setOptions((prevStare) => [...prevStare, ...transformAddresses]);
-    }
-  }, [address, currentAddress, user]);
-
-  useEffect(() => {
-    if (data) {
-      if (data.address !== null) {
-        data.address.value === "add"
-          ? setAddAddress(true)
-          : setAddAddress(false);
-      } else {
-        setAddAddress(false);
-      }
-    }
+    validate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
+
+  const validate = () => {
+    editUserSchema
+      .validate(data)
+      .then(() => setErrors({}))
+      .catch((error) => setErrors({ [error.path]: error.message }));
+    return Object.keys(errors).length === 0;
+  };
 
   const handleChange = (target) => {
     setData((prevStare) => ({
       ...prevStare,
       [target.name]: target.value,
     }));
-    console.log(target.value.value);
   };
 
-  function renderUserAddress(address) {
-    return `City: ${address.city}, 
-    Street: ${address.street}, 
-    House: ${address.house}, 
-    Flat: ${address.flat},
-    Floor: ${address.floor}, 
-    Intercom: ${address.intercom},
-    Entrance: ${address.entrance}`;
-  }
-
-  const handleAddAddress = (data, billing) => {
-    const createNewAddress = [
-      {
-        userId: user.id,
-        ...data,
-      },
-    ];
-
-    const transformAddresses = createNewAddress.map((a) => ({
-      value: a.id,
-      label: renderUserAddress(a),
-    }));
-
-    setOptions((prevStare) => [...prevStare, ...transformAddresses]);
-
-    if (billing) {
-      setUser((prevStare) => ({
-        ...prevStare,
-        currentAddress: data.id,
-      }));
-
-      setAddress((prevStare) => [...prevStare, ...createNewAddress]);
-    } else {
-      setAddress((prevStare) => [...prevStare, ...createNewAddress]);
-    }
-
-    setAddAddress(false);
-  };
-
-  useEffect(() => {
-    if (address) {
-      const currentAddressUser = address.find(
-        (a) => a.id === currentUser.currentAddress
-      );
-      if (currentAddressUser) {
-        const transformAddresses = {
-          value: currentAddressUser.id,
-          label: renderUserAddress(currentAddressUser),
-        };
-        setData((prevStare) => ({
-          ...prevStare,
-          address: transformAddresses,
-        }));
-      }
-    }
-  }, [currentUser, address]);
+  const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
+    const isValid = validate();
+    if (!isValid) return;
+
+    const resData = {
+      ...data,
+      country: data.country.value,
+    };
+
+    dispatch(updateUser({ payload: resData, redirect }));
   };
 
   return (
@@ -143,12 +64,12 @@ const EditProfileForm = ({ user }) => {
       <div className={style.edit_profile_form}>
         <BackButton
           className={style.edit_profile__back_button}
-          urlBack="/account">
+          urlBack={redirect}>
           go back
         </BackButton>
 
         <div className={style.profile_form__title}>Edit Profile</div>
-        {data && options ? (
+        {user ? (
           <>
             <form onSubmit={handleSubmit}>
               <div className={style.edit_form__field}>
@@ -157,6 +78,7 @@ const EditProfileForm = ({ user }) => {
                   label="Your Name"
                   value={data.userName}
                   onChange={handleChange}
+                  error={errors.userName}
                 />
               </div>
 
@@ -166,33 +88,30 @@ const EditProfileForm = ({ user }) => {
                   label="e-mail"
                   value={data.email}
                   onChange={handleChange}
+                  error={errors.email}
                 />
               </div>
 
               <div className={style.edit_form__field}>
                 <SelectField
-                  label="current delivery address "
-                  name="address"
-                  options={options}
-                  value={data.address}
+                  label="country"
+                  name="country"
+                  options={countriesOptions}
+                  value={data.country}
                   type="form"
-                  placeholder="you can edit current delivery address"
+                  placeholder="choose your country"
                   onChange={handleChange}
+                  error={errors.country}
                 />
               </div>
-              {!addAddress ? <Button>submit</Button> : null}
-            </form>
 
-            <>
-              {addAddress ? (
-                <AddNewAddressForm addAddress={handleAddAddress} />
-              ) : null}
-            </>
+              <div className={style.edit_form__action}>
+                <Button isDisabled={!isValid}>submit</Button>
+              </div>
+            </form>
           </>
         ) : (
-          <>
-            <Loading />
-          </>
+          <Loading />
         )}
       </div>
     </div>

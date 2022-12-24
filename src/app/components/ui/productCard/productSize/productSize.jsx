@@ -1,31 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./productSize.module.scss";
 import Loading from "../../../common/loadingComponent/loading";
-import _ from "lodash";
-import api from "../../../../api";
+import { useSelector } from "react-redux";
+import { getSizeByIds } from "../../../../store/slices/size";
 
 const ProductSize = ({ sizes, onChange }) => {
-  const [sizesArray, setSizes] = useState();
+  const sizesArray = useSelector(getSizeByIds(sizes));
   const [currentSize, setCurrentSize] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (sizes) {
-      api.sizes.getSizesByIds(sizes).then((data) => setSizes(data));
-    }
-  }, [sizes]);
-
-  useEffect(() => {
-    if (sizesArray) {
-      setIsLoading(false);
-    }
-  }, [sizesArray]);
-
-  const sortSize = _.orderBy(sizesArray, ["value"], ["asc"]);
 
   const handleChange = (id) => {
     setCurrentSize(id);
-    onChange({ size: id });
+    onChange({ sizes: [id] });
   };
 
   const setActiveClass = (id) => {
@@ -36,19 +21,19 @@ const ProductSize = ({ sizes, onChange }) => {
 
   return (
     <>
-      {sizes && (
+      {sizes.length !== 0 && (
         <>
-          {!isLoading ? (
+          {sizesArray ? (
             <div className={style.product_size}>
-              {sortSize && sortSize.length !== 0 && (
+              {sizesArray && sizesArray.length !== 0 && (
                 <ul className={style.product_size__list}>
                   <div className={style.product_size__title}>size</div>
-                  {sortSize.map((s) => (
+                  {sizesArray.map((s) => (
                     <li
-                      key={s.id}
-                      onClick={() => handleChange(s.id)}
-                      className={setActiveClass(s.id)}>
-                      <span>{s.value}</span>
+                      key={s._id}
+                      onClick={() => handleChange(s._id)}
+                      className={setActiveClass(s._id)}>
+                      <span>{s.name}</span>
                     </li>
                   ))}
                 </ul>

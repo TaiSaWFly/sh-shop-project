@@ -5,13 +5,7 @@ const UserReviewer = ({ user }) => {
   return (
     <div className={style.display_user}>
       <div className={style.display_user__avatar}>
-        <img
-          // user.avatar
-          alt="pic"
-          src={`https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1)
-            .toString(36)
-            .substring(7)}.svg`}
-        />
+        <img alt="pic" src={user.avatar} />
       </div>
       <div className={style.display_user__name}>{user.userName}</div>
     </div>

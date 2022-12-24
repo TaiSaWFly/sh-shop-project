@@ -24,7 +24,7 @@ const DropdownPopularDescription = ({ product, dropdown }) => {
       <div>
         <ProductDescriptionShort
           {...{
-            id: product.id,
+            id: product._id,
             name: product.name,
             prices: product.prices,
             newPrice: product.newPrice,

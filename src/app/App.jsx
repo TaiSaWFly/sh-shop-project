@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Footer from "./components/ui/footer/footerComponent/footer";
 import Header from "./components/ui/header/headerComponent/header";
@@ -16,46 +16,31 @@ import ProtectedRoute from "./components/common/protectedRoutes/protectedRoute";
 import NewArrivalsPage from "./components/page/newProductsPages/newArrivalsPage";
 import withRedux from "./hoc/withRedux";
 import withRouter from "./hoc/withRouter";
-import { useDispatch } from "react-redux";
-import { loadNavigateMenu } from "./store/slices/navigateMenu";
-import { loadCategory } from "./store/slices/category";
-import { loadCollectionCategory } from "./store/slices/collectionCategory";
+import AppLoader from "./hoc/appLoader";
 
 function App() {
-  const dispatch = useDispatch();
-
-  // init Redux Data
-  useEffect(() => {
-    dispatch(loadCategory());
-    dispatch(loadNavigateMenu());
-    dispatch(loadCollectionCategory());
-    // eslint-disable-next-line
-  }, []);
-
   return (
-    <AuthProvider>
-      <Header />
-      <PageLayout>
-        <Switch>
-          <Route path="/" exact component={MainPage} />
-          <Route path="/auth" component={AuthLayout} />
-          <ProtectedRoute
-            path="/account"
-            component={AccountLayout}
-            redirect="/auth"
-          />
-          <Route path="/collection" component={CollectionLayout} />
-          <Route path="/product/:productId?" component={ProductCardLayout} />
-          <Route path="/basket" component={BasketPage} />
-          <Route path="/newarrivals" component={NewArrivalsPage} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/contact" component={ContactPage} />
+    <AppLoader>
+      <AuthProvider>
+        <Header />
+        <PageLayout>
+          <Switch>
+            <Route path="/" exact component={MainPage} />
+            <Route path="/auth" component={AuthLayout} />
+            <ProtectedRoute path="/account" component={AccountLayout} />
+            <Route path="/collection" component={CollectionLayout} />
+            <Route path="/product/:productId?" component={ProductCardLayout} />
+            <Route path="/basket" component={BasketPage} />
+            <Route path="/newarrivals" component={NewArrivalsPage} />
+            <Route path="/about" component={AboutPage} />
+            <Route path="/contact" component={ContactPage} />
 
-          <Redirect to="/" from="*" />
-        </Switch>
-      </PageLayout>
-      <Footer />
-    </AuthProvider>
+            <Redirect to="/" from="*" />
+          </Switch>
+        </PageLayout>
+        <Footer />
+      </AuthProvider>
+    </AppLoader>
   );
 }
 

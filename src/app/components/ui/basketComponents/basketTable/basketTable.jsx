@@ -7,84 +7,87 @@ import BasketColor from "../basketColor/basketColor";
 import BasketQuantity from "../basketQuantity/basketQuantity";
 import Button from "../../../common/buttonComponent/button";
 import Price from "../../../common/priceComponent/price";
+import BasketSize from "../basketSize/basketSize";
+import { useDispatch } from "react-redux";
+import {
+  decrementBasketElement,
+  deleteProductFromBasket,
+  incrementBasketElement,
+} from "../../../../store/slices/basket";
 
-const BasketTable = () => {
-  const total = 124.33;
-  const basket = [
-    {
-      id: "product_1",
-      imgUrl: "assets/img/clothers/burnt3.webp",
-      name: "Double-Layered Top",
-      price: "29.95",
-      articleNumber: "123449992378",
-      size: "38",
-      color: "red",
-      quantity: 1,
-    },
-    {
-      id: "product_2",
-      imgUrl: "assets/img/clothers/burnt3.webp",
-      name: "Double-Layered Top",
-      price: "29.95",
-      articleNumber: "123449992378",
-      size: "38",
-      color: "green",
-      quantity: 2,
-    },
-    {
-      id: "product_3",
-      imgUrl: "assets/img/clothers/burnt3.webp",
-      name: "Double-Layered Top",
-      price: "29.95",
-      articleNumber: "123449992378",
-      size: "38",
-      color: "blue",
-      quantity: 3,
-    },
-  ];
+const BasketTable = ({ basketData, totalAmount }) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteProductFromBasket = (id) => {
+    dispatch(deleteProductFromBasket(id));
+  };
+
+  const handleDecrementBasketElement = (id) => {
+    dispatch(decrementBasketElement(id));
+  };
+
+  const handleIncrementBasketElement = (id) => {
+    dispatch(incrementBasketElement(id));
+  };
 
   const columns = {
     product: {
       name: "product",
-      component: (b) => <BasketProductImage id={b.id} imgUrl={b.imgUrl} />,
+      component: (b) => (
+        <BasketProductImage id={b.productId} imgUrl={b.imgUrl} />
+      ),
     },
     decription: {
       name: "decription",
       component: (b) => (
-        <BasketDecription id={b.id} name={b.name} article={b.articleNumber} />
+        <BasketDecription
+          id={b.productId}
+          name={b.name}
+          article={b.articleNumber}
+        />
       ),
     },
     color: {
       name: "color",
-      component: (b) => <BasketColor color={b.color} />,
+      component: (b) => <BasketColor colors={b.colors} />,
     },
     size: {
       name: "size",
-      path: "size",
+      component: (b) => <BasketSize sizes={b.sizes} />,
     },
     quantity: {
       name: "qty",
-      component: (b) => <BasketQuantity quantity={b.quantity} />,
+      component: (b) => (
+        <BasketQuantity
+          id={b._id}
+          quantity={b.quantity}
+          {...{ handleDecrementBasketElement, handleIncrementBasketElement }}
+        />
+      ),
       footer: {
         name: "subtotal:",
       },
     },
     amount: {
       name: "amount",
-      component: (b) => <Price price={b.price} />,
+      component: (b) => <Price price={b.amount} />,
       footer: {
         component: (data) => <Price price={data} />,
       },
     },
     delete: {
       name: "",
-      component: () => <Button className={"button_table__delete"}></Button>,
+      component: (b) => (
+        <Button
+          onAction={() => handleDeleteProductFromBasket(b._id)}
+          className={"button_table__delete"}></Button>
+      ),
     },
   };
 
   return (
     <div className={style.basket_table}>
-      <Table columns={columns} dataBody={basket} dataFooter={total} />
+      <Table columns={columns} dataBody={basketData} dataFooter={totalAmount} />
     </div>
   );
 };

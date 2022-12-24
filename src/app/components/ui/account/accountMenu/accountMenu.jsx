@@ -5,6 +5,8 @@ import { ReactComponent as Edit } from "../../../../../../node_modules/bootstrap
 import { ReactComponent as Favourite } from "../../../../../../node_modules/bootstrap-icons/icons/heart-half.svg";
 import { ReactComponent as History } from "../../../../../../node_modules/bootstrap-icons/icons/hourglass-split.svg";
 import { ReactComponent as Basket } from "../../../../../../node_modules/bootstrap-icons/icons/basket3-fill.svg";
+import FavouriteChevronQuantity from "../../../common/chevrons/favouriteChevronQuantity/favouriteChevronQuantity";
+import BasketChevronQuantity from "../../../common/chevrons/basketChevronQuantity/basketChevronQuantity";
 
 const AccountMenu = () => {
   const history = useHistory();
@@ -19,7 +21,10 @@ const AccountMenu = () => {
       url: "/account/favourite",
       name: "Favourite",
       component: () => (
-        <Favourite max-width="100px" width="100%" height="100px" />
+        <div className={style.menu_link__icon_chevron}>
+          <Favourite max-width="100px" width="100%" height="100px" />
+          <FavouriteChevronQuantity />
+        </div>
       ),
     },
     {
@@ -32,7 +37,12 @@ const AccountMenu = () => {
     {
       url: "/basket",
       name: "Your Basket",
-      component: () => <Basket max-width="100px" width="100%" height="100px" />,
+      component: () => (
+        <div>
+          <Basket max-width="100px" width="100%" height="100px" />
+          <BasketChevronQuantity />
+        </div>
+      ),
     },
   ];
 

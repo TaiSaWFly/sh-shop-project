@@ -4,11 +4,11 @@ import { definedLengthArray } from "../../utils/definedLengthArray";
 let isLoading = false;
 
 const popular = [
-  //   { id: "popular_1", name: "popular", products: [] },
-  //   { id: "popular_2", name: "new arrivals", products: [] },
-  //   { id: "popular_3", name: "best sellers", products: [] },
-  //   { id: "popular_4", name: "special offers", products: [] },
-  //   { id: "popular_5", name: "comming soon", products: [] },
+  // { id: "popular_1", name: "popular", products: [] },
+  // { id: "popular_2", name: "new arrivals", products: [] },
+  // { id: "popular_3", name: "best sellers", products: [] },
+  // { id: "popular_4", name: "special offers", products: [] },
+  // { id: "popular_5", name: "comming soon", products: [] },
 ];
 
 const fetchAll = () =>

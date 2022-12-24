@@ -1,112 +1,117 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import api from "../../../api";
+import withProductFilter from "../../../hoc/withProductFilter/withProductFilter";
+import { getCategoryByPath } from "../../../store/slices/category";
+import { getCollectionCategoryByPath } from "../../../store/slices/collectionCategory";
+import { removeFilterData } from "../../../store/slices/filterMemory";
+import {
+  getProductByCollectionId,
+  getProductByCollectionIdAndCategoryId,
+  getProductLoadingStatus,
+  loadProductByCollectionPath,
+  loadProductByCollectionPathAndCategoryPath,
+} from "../../../store/slices/product";
 import Loading from "../../common/loadingComponent/loading";
 import CollectionHeader from "../../ui/collectionComponents/collectionHeader/collectionHeader";
-import NoProductsCaregory from "../../ui/collectionComponents/noProductsCaregory/noProductsCaregory";
-import ProductFilter from "../../ui/collectionComponents/productFilter/productFilter";
 import ProductItems from "../../ui/collectionComponents/productItems/productItems";
 
 const AllProductsPage = () => {
   const { collection: collectionPath, category: categoryPath } = useParams();
+  const dispatch = useDispatch();
+  const defaultLength = 8;
 
-  const [allProducts, setProducts] = useState();
-  const [collCategory, setCollCategory] = useState();
+  // States
   const [isLoading, setLoading] = useState(true);
-  const [dataPage, setDataPage] = useState();
+  const [products, setProducts] = useState();
+  const [limit, setLimit] = useState(defaultLength);
 
-  console.log(collectionPath, categoryPath);
+  // HOC
+  const ProductItemsWithProductFilter = withProductFilter(ProductItems);
+
+  // Selectors
+  const collection = useSelector(getCollectionCategoryByPath(collectionPath));
+  const category = useSelector(getCategoryByPath(categoryPath));
+  const dataProductsSelectorByCollectionId = useSelector(
+    getProductByCollectionId(collection._id, limit)
+  );
+  const dataProductsSelectorByCollectionIdAndCategoryId = useSelector(
+    getProductByCollectionIdAndCategoryId(collection._id, category?._id, limit)
+  );
+
+  // Loading
+  const isLoadingProducts = useSelector(getProductLoadingStatus());
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [collectionPath]);
 
   useEffect(() => {
     setLoading(true);
 
-    if (!categoryPath) {
-      api.collections
-        .getCollectionProductsByPath(collectionPath)
-        .then((data) => setProducts(data));
-
-      api.collections
-        .getCollectionByPath(collectionPath)
-        .then((data) => setDataPage(data));
-
-      api.collectionCategories
-        .getCollCategoryByCollectionPath(collectionPath)
-        .then((data) => setCollCategory(data));
-    }
-
     if (categoryPath) {
-      api.products
-        .getProductsByCollectionPathAndCategoryPath(
+      dispatch(
+        loadProductByCollectionPathAndCategoryPath(
           collectionPath,
-          categoryPath
+          categoryPath,
+          collection._id,
+          category._id,
+          limit
         )
-        .then((data) => setProducts(data));
+      );
 
-      api.categories
-        .getCategoryByPath(categoryPath)
-        .then((data) => setDataPage(data));
+      setProducts(dataProductsSelectorByCollectionIdAndCategoryId);
+    } else {
+      dispatch(
+        loadProductByCollectionPath(collectionPath, collection._id, limit)
+      );
 
-      api.collectionCategories
-        .getCollCategoryByCollectionPath(collectionPath)
-        .then((data) => setCollCategory(data));
+      setProducts(dataProductsSelectorByCollectionId);
     }
+
+    // eslint-disable-next-line
+  }, [collectionPath, categoryPath, isLoadingProducts, limit]);
+
+  useEffect(() => {
+    setLimit(defaultLength);
+    dispatch(removeFilterData());
+
+    // eslint-disable-next-line
   }, [collectionPath, categoryPath]);
 
   useEffect(() => {
-    if (allProducts) {
-      console.log(allProducts);
+    if (products && !isLoadingProducts) {
       setLoading(false);
     }
-  }, [allProducts]);
+  }, [products, isLoadingProducts]);
 
-  // useEffect(() => {
-  //   if (collCategory) {
-
-  //   }
-  // }, [collCategory]);
-
-  // useEffect(() => {
-  //   if (dataPage) {
-  //     // console.log(dataPage);
-  //   }
-  // }, [dataPage]);
+  const handleMoreProduct = () => {
+    setLimit((prevState) => prevState + defaultLength);
+  };
 
   return (
     <>
-      <h2>
-        AllProductsPage {collectionPath} {categoryPath}
-      </h2>
+      <CollectionHeader
+        {...{
+          name: category ? category.name : collection.name,
+        }}
+      />
+
       {!isLoading ? (
         <>
-          {allProducts.length !== 0 ? (
-            <>
-              {collCategory ? (
-                <>
-                  <CollectionHeader {...{ name: dataPage.name }} />
-                  <ProductFilter />
-                  <ProductItems productsItems={allProducts} />
-                </>
-              ) : (
-                <>
-                  <CollectionHeader {...{ name: dataPage.name }} />
-                  <ProductItems productsItems={allProducts} />
-                </>
-              )}
-            </>
-          ) : (
-            <NoProductsCaregory
-              {...{
-                name: dataPage.name,
-                categoryId: dataPage.id,
-                collectionPath,
-              }}
-            />
-          )}
+          <ProductItemsWithProductFilter
+            {...{
+              products,
+              collectionPath,
+              collection,
+              category,
+              limit,
+              handleMoreProduct,
+            }}
+          />
         </>
       ) : (
-        <>
-          <Loading />
-        </>
+        <Loading />
       )}
     </>
   );

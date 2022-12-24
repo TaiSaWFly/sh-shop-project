@@ -18,7 +18,7 @@ const NavList = () => {
       {!isLoadingMenus ? (
         <ul className={style.nav_list}>
           {menus.map((menu) => (
-            <NavListMenuItems menu={menu} key={menu.id} />
+            <NavListMenuItems menu={menu} key={menu._id} />
           ))}
         </ul>
       ) : (

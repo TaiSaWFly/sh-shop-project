@@ -40,7 +40,7 @@ const ProductDescriptionShort = ({
       </div>
 
       <div className={style.product_description__actions}>
-        <ProductListActions productId={id} />
+        <ProductListActions productId={id} {...{ prices }} />
       </div>
     </div>
   );

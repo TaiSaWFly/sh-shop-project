@@ -3,7 +3,7 @@ import Button from "../../../common/buttonComponent/button";
 import TextAreaField from "../../../common/fieldCommonents/textAreaField/textAreaField";
 import style from "./addReviewForm.module.scss";
 
-const AddReviewForm = ({ onSubmit }) => {
+const AddReviewForm = ({ onSubmit, user }) => {
   const [data, setData] = useState({
     content: "",
   });
@@ -17,7 +17,7 @@ const AddReviewForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(data);
+    onSubmit({ ...data, userId: user._id });
   };
 
   return (

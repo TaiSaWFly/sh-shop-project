@@ -1,6 +1,4 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { courierFormSchema } from "../../../../../utils/yupSchema";
 import Button from "../../../../common/buttonComponent/button";
 import CheckBoxField from "../../../../common/fieldCommonents/checkBoxField/checkBoxField";

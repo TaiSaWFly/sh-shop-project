@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { footerList } from "../../../../data/initDataForPage/footerList";
 import { Link } from "react-router-dom";
 import { ReactComponent as VkSocial } from "../../../../../assets/svg_icons/vk_social.svg";
@@ -6,13 +7,24 @@ import { ReactComponent as FaceboofSocial } from "../../../../../assets/svg_icon
 import { ReactComponent as InstagramSocial } from "../../../../../assets/svg_icons/instagram_social.svg";
 import style from "./footer.module.scss";
 import ComponentContainer from "../../../common/componentContainer/componentContainer";
+import { getProductLength } from "../../../../store/slices/product";
+import { getCollectionCategory } from "../../../../store/slices/collectionCategory";
+import { transformCollectionFooterData } from "../../../../utils/transformCollectionFooterData";
 
 const Footer = () => {
+  const productsLenght = useSelector(getProductLength());
+  const collectionCaterogy = useSelector(getCollectionCategory());
+  const footerListData = transformCollectionFooterData({
+    footerList,
+    productsLenght,
+    collectionCaterogy,
+  });
+
   return (
     <footer>
       <ComponentContainer name={"footer"}>
         <div className={style.footer__wrapper}>
-          {footerList.map((list, index) => (
+          {footerListData.map((list, index) => (
             <ul key={index} className={style.footer__list}>
               <div className={style.footer__list_title}>{list.title}</div>
 

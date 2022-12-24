@@ -21,21 +21,23 @@
   & form {
     margin-top: 20px;
     text-align: center;
+  }
+}
 
-    & button {
-      display: inline-block;
-      margin-bottom: 10px;
-      padding: 2rem 8rem;
-      color: $tertiary;
+.edit_form__action {
+  & button {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 2rem 8rem;
+    color: $tertiary;
 
-      border: 1px solid transparent;
-      background: $orange;
+    border: 1px solid transparent;
+    background: $orange;
 
-      &:hover {
-        color: $orange;
-        background: transparent;
-        border-color: $orange;
-      }
+    &:hover {
+      color: $orange;
+      background: transparent;
+      border-color: $orange;
     }
   }
 }

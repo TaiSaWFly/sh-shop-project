@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Button from "../../../common/buttonComponent/button";
 import CheckBoxField from "../../../common/fieldCommonents/checkBoxField/checkBoxField";
 import TextField from "../../../common/fieldCommonents/textField/textField";

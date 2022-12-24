@@ -1,35 +1,29 @@
 import { randomNumber } from "./randomNumber";
 
-export function returnCaterogiesWithoutCurrentCategoryId(
-  collectionCategories,
+export function returnCaterogiesWithoutCurrentCategoryId({
+  categoryId,
   collectionId,
-  currentCategoryId,
-  categories
-) {
-  const findCurrentCollectionCaterogy = collectionCategories.find(
-    (c) => c.collection === collectionId
-  );
-  const categoriesIds = findCurrentCollectionCaterogy.categories;
-  const categoriesIdsWithoutCurrentCategoryId = categoriesIds.filter(
-    (c) => c !== currentCategoryId
-  );
+  productsLength,
+}) {
+  const findCollection = productsLength.find((c) => c._id === collectionId);
 
-  let categoriesArray = [];
-  for (const id in categoriesIdsWithoutCurrentCategoryId) {
-    for (const c in categories) {
-      if (categories[c].id === categoriesIdsWithoutCurrentCategoryId[id]) {
-        categoriesArray.push(categories[c]);
-      }
-    }
-  }
+  const cloneCollectionCaterogyArray = [...findCollection.categories];
+
+  const categoriesWithoutCurrentCategoryIdAndEmptyLength =
+    cloneCollectionCaterogyArray.filter(
+      (c) => c._id !== categoryId && c.length !== 0
+    );
+
+  const categoriesIdsArray =
+    categoriesWithoutCurrentCategoryIdAndEmptyLength.map((c) => c._id);
 
   let mixCategoriesIds = [];
-  for (let i = 0; i < categoriesArray.length; i++) {
+  for (let i = 0; i < categoriesIdsArray.length; i++) {
     let number = randomNumber(0, 100);
     if (number % 2 !== 0) {
-      mixCategoriesIds.push(categoriesArray[i]);
+      mixCategoriesIds.push(categoriesIdsArray[i]);
     } else {
-      mixCategoriesIds.unshift(categoriesArray[i]);
+      mixCategoriesIds.unshift(categoriesIdsArray[i]);
     }
   }
 

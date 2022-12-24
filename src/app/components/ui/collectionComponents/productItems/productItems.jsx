@@ -5,6 +5,7 @@ import { getProductLoadingStatus } from "../../../../store/slices/product";
 import ProductDescriptionShort from "../../../common/productDescriptionShort/productDescriptionShort";
 import style from "./productItems.module.scss";
 import Loading from "../../../common/loadingComponent/loading";
+import BasketChevronQuantity from "../../../common/chevrons/basketChevronQuantity/basketChevronQuantity";
 
 const ProductItems = ({ productsItems: products }) => {
   const history = useHistory();
@@ -19,10 +20,10 @@ const ProductItems = ({ productsItems: products }) => {
       {!isLoadingProducts ? (
         products.map((p) => (
           <div key={p._id} className={style.product_item_wrapper}>
-            <div
-              onClick={() => handleRedirectToProduct(p._id)}
-              className={style.product_item_wrap}>
-              <div className={style.product_item_img}>
+            <div className={style.product_item_wrap}>
+              <div
+                onClick={() => handleRedirectToProduct(p._id)}
+                className={style.product_item_img}>
                 <img alt="pic" src={require(`/src/${p.imgUrl}`)} />
               </div>
               <ProductDescriptionShort
@@ -30,13 +31,13 @@ const ProductItems = ({ productsItems: products }) => {
                   id: p._id,
                   name: p.name,
                   prices: p.prices,
-                  newPrice: p.newPrice,
                   description: p.description,
                   titleSize: "1.2rem",
                   textSize: "1.15rem",
                   QTYSentences: 2,
                 }}
               />
+              <BasketChevronQuantity productId={p._id} />
             </div>
           </div>
         ))

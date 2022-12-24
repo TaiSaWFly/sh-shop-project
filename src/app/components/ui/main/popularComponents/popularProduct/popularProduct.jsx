@@ -4,7 +4,7 @@ import DropdownPopularDescription from "../dropdownPopularDescription/dropdownPo
 import style from "./popularProduct.module.scss";
 
 const PopularProduct = ({ product, redirectToProduct }) => {
-  const { id, imgUrl, otherImg, prices } = product;
+  const { _id, imgUrl, otherImg, prices } = product;
   const [dropdown, setDropdown] = useState(false);
 
   return (
@@ -16,7 +16,7 @@ const PopularProduct = ({ product, redirectToProduct }) => {
           className={style.popular_product__link}>
           <div
             className={style.popular_product__img}
-            onClick={() => redirectToProduct(id)}>
+            onClick={() => redirectToProduct(_id)}>
             <img alt="pic" src={require(`/src/${imgUrl}`)} />
             <div className={style.popular_product__imgs}>
               {otherImg.map((img, index) => (

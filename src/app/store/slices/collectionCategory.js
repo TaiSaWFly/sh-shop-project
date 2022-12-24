@@ -55,10 +55,18 @@ export const getCollectionIdByPath = (path) => (state) => {
   if (state.collectionCategory.entities) {
     collectionId = state.collectionCategory.entities.find(
       (e) => e.path === path
-    ).id;
+    )._id;
   }
 
   return collectionId;
+};
+export const getCollectionCategory = () => (state) => {
+  let data;
+  if (state.collectionCategory.entities) {
+    data = state.collectionCategory.entities;
+  }
+
+  return data;
 };
 export const getCollectionCategoryLoadingStatus = () => (state) =>
   state.collectionCategory.isLoading;

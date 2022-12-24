@@ -1,10 +1,10 @@
 import React from "react";
 import HistoryTable from "./historyTable/historyTable";
 
-const AccountHistory = ({ user }) => {
+const AccountHistory = () => {
   return (
     <>
-      <HistoryTable userId={user.id} />
+      <HistoryTable />
     </>
   );
 };

@@ -1,18 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./accountLink.module.scss";
 import { ReactComponent as Person } from "../../../../../../node_modules/bootstrap-icons/icons/person-circle.svg";
 import Loading from "../../../common/loadingComponent/loading";
-import { useAuth } from "../../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAuthUserId,
+  getIsLoadingStatusUser,
+  getIsLoggedInStatus,
+  getUser,
+  getUserById,
+  logOut,
+} from "../../../../store/slices/user";
 
 const AccountLink = () => {
-  const { isAuth, currentUser, handlelogOut, isLoading } = useAuth();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(getIsLoggedInStatus());
+  const authUserId = useSelector(getAuthUserId());
+  const user = useSelector(getUser());
+  const isLoadingStatusUser = useSelector(getIsLoadingStatusUser());
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getUserById(authUserId));
+    }
+
+    // eslint-disable-next-line
+  }, [isLoggedIn]);
+
+  const handlelogOut = () => {
+    dispatch(logOut());
+  };
 
   return (
     <div className={style.account_link__wrapper}>
-      {isAuth ? (
+      {isLoggedIn ? (
         <>
-          {!isLoading ? (
+          {!isLoadingStatusUser ? (
             <div className={style.account_link}>
               <Link to="/account" className={style.account_link__action}>
                 <div className={style.account_link__wrapper_icon}>
@@ -20,7 +44,7 @@ const AccountLink = () => {
                 </div>
                 <div>
                   <span>Hi, </span>
-                  <span>{currentUser.userName} </span>
+                  <span>{user.userName} </span>
                 </div>
               </Link>
               <div

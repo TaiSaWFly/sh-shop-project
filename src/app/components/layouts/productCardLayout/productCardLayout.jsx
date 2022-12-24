@@ -1,20 +1,29 @@
 import React from "react";
-import { useState } from "react";
 import { useEffect } from "react";
 import { Redirect, Route, Switch, useParams } from "react-router-dom";
-import api from "../../../api";
+import { useDispatch, useSelector } from "react-redux";
 import ComponentContainer from "../../common/componentContainer/componentContainer";
 import Loading from "../../common/loadingComponent/loading";
 import ProductCardPage from "../../page/productCardPages/productCardPage/productCardPage";
 import ProductDescriptionPage from "../../page/productCardPages/productDescriptionPage/productDescriptionPage";
 import ReviewsPage from "../../page/productCardPages/reviewsPage/reviewsPage";
 import style from "./productCardLayout.module.scss";
+import {
+  getProductByIds,
+  loadProductByIds,
+} from "../../../store/slices/product";
 
 const ProductCardLayout = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState();
+
+  const dispatch = useDispatch();
+  const product = useSelector(getProductByIds(productId));
+
   useEffect(() => {
-    api.products.getProductById(productId).then((data) => setProduct(data));
+    dispatch(loadProductByIds([productId]));
+    window.scrollTo(0, 0);
+
+    // eslint-disable-next-line
   }, [productId]);
 
   return (
