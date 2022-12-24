@@ -27,28 +27,4 @@
 
 .above_header__link_currency {
   padding: 15px 40px 15px 20px;
-  cursor: pointer;
-  position: relative;
-
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-
-  &::after {
-    @include add-arrow;
-
-    top: 45%;
-    right: 20px;
-    transform: translateY(-45%) rotate(45deg);
-
-    transition: border-color 0.2s ease-in-out;
-  }
-
-  &:hover {
-    color: $hoverWhite;
-    background: $hoverBlue;
-
-    &::after {
-      border-bottom-color: $tertiary;
-      border-right-color: $tertiary;
-    }
-  }
 }
