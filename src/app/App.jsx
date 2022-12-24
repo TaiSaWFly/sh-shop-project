@@ -11,7 +11,6 @@ import AuthLayout from "./components/layouts/authLayout/authLayout";
 import AccountLayout from "./components/layouts/accountLayout/accountLayout";
 import ContactPage from "./components/page/contactPage/contactPage";
 import ProductCardLayout from "./components/layouts/productCardLayout/productCardLayout";
-import AuthProvider from "./components/hooks/useAuth";
 import ProtectedRoute from "./components/common/protectedRoutes/protectedRoute";
 import NewArrivalsPage from "./components/page/newProductsPages/newArrivalsPage";
 import withRedux from "./hoc/withRedux";
@@ -21,25 +20,23 @@ import AppLoader from "./hoc/appLoader";
 function App() {
   return (
     <AppLoader>
-      <AuthProvider>
-        <Header />
-        <PageLayout>
-          <Switch>
-            <Route path="/" exact component={MainPage} />
-            <Route path="/auth" component={AuthLayout} />
-            <ProtectedRoute path="/account" component={AccountLayout} />
-            <Route path="/collection" component={CollectionLayout} />
-            <Route path="/product/:productId?" component={ProductCardLayout} />
-            <Route path="/basket" component={BasketPage} />
-            <Route path="/newarrivals" component={NewArrivalsPage} />
-            <Route path="/about" component={AboutPage} />
-            <Route path="/contact" component={ContactPage} />
+      <Header />
+      <PageLayout>
+        <Switch>
+          <Route path="/" exact component={MainPage} />
+          <Route path="/auth" component={AuthLayout} />
+          <ProtectedRoute path="/account" component={AccountLayout} />
+          <Route path="/collection" component={CollectionLayout} />
+          <Route path="/product/:productId?" component={ProductCardLayout} />
+          <Route path="/basket" component={BasketPage} />
+          <Route path="/newarrivals" component={NewArrivalsPage} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/contact" component={ContactPage} />
 
-            <Redirect to="/" from="*" />
-          </Switch>
-        </PageLayout>
-        <Footer />
-      </AuthProvider>
+          <Redirect to="/" from="*" />
+        </Switch>
+      </PageLayout>
+      <Footer />
     </AppLoader>
   );
 }
